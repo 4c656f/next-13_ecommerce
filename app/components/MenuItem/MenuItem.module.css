@@ -1,0 +1,31 @@
+/* Text colors */
+/* Text Fonts */
+/* Animation */
+/* Layouts */
+.container {
+  color: var(--index_0_text);
+  cursor: pointer;
+  width: 100%;
+  padding: 7px 13px 7px 13px;
+  font-family: "BasierCircle", sans-serif;
+  font-size: 14px;
+  color: var(--index_0_text);
+  font-weight: 400;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+.container.disabled {
+  color: var(--index_2_text);
+  pointer-events: none;
+}
+.container.active {
+  background-color: var(--index_2_color);
+}
+.container.chosen {
+  background-color: var(--index_2_5_color);
+}
+.container:hover {
+  background-color: var(--index_2_5_color);
+}
+
+/*# sourceMappingURL=MenuItem.module.css.map */

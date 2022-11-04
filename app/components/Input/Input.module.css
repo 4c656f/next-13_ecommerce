@@ -1,0 +1,63 @@
+/* Text colors */
+/* Text Fonts */
+/* Animation */
+/* Layouts */
+.container {
+  all: unset;
+  color: var(--index_0_text);
+  font-family: "BasierCircle", sans-serif;
+  transition: 0.3s;
+  border-radius: 6px;
+  font-family: "BasierCircle", sans-serif;
+  font-size: 14px;
+  color: var(--index_0_text);
+  font-weight: 400;
+  padding: 10px 16px 10px 10px;
+}
+
+.main_container {
+  width: max-content;
+  height: max-content;
+  position: relative;
+}
+
+.container:focus::placeholder {
+  opacity: 0;
+}
+
+.container::placeholder {
+  color: var(--index_2_text);
+  transition: 0.3s;
+  font-family: "BasierCircle", sans-serif;
+  font-size: 14px;
+  color: var(--index_0_text);
+  font-weight: 300;
+}
+
+.color_0_index {
+  background-color: var(--index_1_color);
+}
+.color_1_index {
+  background-color: var(--index_3_color);
+}
+.color_2_index {
+  background-color: var(--index_1_color);
+}
+.color_action_index {
+  background-color: var(--index_3_color);
+}
+.icon {
+  position: absolute;
+  right: calc(0% + 24px);
+  transform: translate(0%, -50%);
+  top: 50%;
+  height: 14px;
+  width: 14px;
+  transition: 0.3s;
+}
+.icon path {
+  transition: 0.3s;
+  stroke: var(--index_0_text);
+}
+
+/*# sourceMappingURL=Input.module.css.map */

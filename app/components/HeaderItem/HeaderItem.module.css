@@ -1,0 +1,23 @@
+.container {
+  all: unset;
+}
+.container:hover > .section {
+  display: block;
+}
+
+.section {
+  position: absolute;
+  display: none;
+  transform: translate(-50%, 0);
+  left: 50%;
+  top: calc(100% - 20px);
+  padding: 20px;
+}
+.section:hover {
+  display: block;
+}
+.section:hover ~ .button {
+  background-color: var(--index_1_5_color);
+}
+
+/*# sourceMappingURL=HeaderItem.module.css.map */

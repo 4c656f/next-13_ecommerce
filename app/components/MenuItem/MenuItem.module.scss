@@ -1,0 +1,31 @@
+@import "../../../scssMaterials/variables";
+
+
+.container{
+  color: var(--index_0_text);
+  cursor: pointer;
+  width: 100%;
+
+  @include small_padding;
+  @include default_h4;
+
+  border-radius: $border_radius;
+  transition: $default_transition;
+
+  &.disabled{
+    color: var(--index_2_text);
+    pointer-events: none;
+  }
+
+
+  &.active{
+    background-color: var(--index_2_color);
+
+  }
+  &.chosen{
+    background-color: var(--index_2_5_color);
+  }
+  &:hover{
+    background-color: var(--index_2_5_color);
+  }
+}

@@ -1,0 +1,175 @@
+/* Text colors */
+/* Text Fonts */
+/* Animation */
+/* Layouts */
+.container {
+  position: relative;
+  width: max-content;
+}
+
+.toggle {
+  all: unset;
+  position: relative;
+  left: 0%;
+  top: 0%;
+  color: var(--index_0_text);
+  transition: 0.3s;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  grid-gap: 5px;
+  align-content: center;
+  flex-wrap: wrap;
+  width: 200px;
+  font-family: "BasierCircle", sans-serif;
+  font-size: 14px;
+  color: var(--index_0_text);
+  font-weight: 400;
+}
+
+.small {
+  padding: 7px 13px 7px 13px;
+}
+
+.medium {
+  padding: 10px 16px 10px 16px;
+}
+
+.large {
+  padding: 14px 17px 14px 17px;
+}
+
+.icon {
+  position: absolute;
+  right: calc(0% + 24px);
+  transform: translate(0%, -50%);
+  top: 50%;
+  height: 14px;
+  width: 14px;
+  transition: 0.3s;
+}
+.icon path {
+  transition: 0.3s;
+  stroke: var(--index_0_text);
+}
+
+.toggle.color_0_index {
+  background-color: var(--index_1_color);
+}
+.toggle.color_1_index {
+  background-color: var(--index_3_color);
+}
+.toggle.color_2_index {
+  background-color: var(--index_1_color);
+}
+.toggle.color_action_index {
+  background-color: var(--index_3_color);
+}
+@keyframes appearance {
+  0% {
+    transform: translate(0, -10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0px);
+    opacity: 1;
+  }
+}
+@keyframes hide {
+  0% {
+    transform: translate(0px);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, -10px);
+    opacity: 0;
+  }
+}
+.menu {
+  all: unset;
+  box-sizing: border-box;
+  height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  background-color: var(--index_1_color);
+  position: absolute;
+  left: 0%;
+  top: calc(100% + 10px);
+  padding: 0;
+  animation-name: appearance;
+  animation-duration: 0.2s;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 4px;
+  /* width */
+  /* Track */
+  /* Handle */
+  padding: 7px 10px 7px 10px;
+}
+.menu::-webkit-scrollbar {
+  width: 8px;
+}
+.menu::-webkit-scrollbar-track {
+  background: none;
+}
+.menu::-webkit-scrollbar-thumb {
+  border: 2.5px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  background-color: var(--index_2_color);
+  border-radius: 9999px;
+}
+.menu::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+.menu.hide {
+  animation-name: hide;
+  animation-duration: 0.2s;
+  animation-iteration-count: 1;
+  opacity: 0;
+  transform: translate(0, -10px);
+}
+
+.search_container {
+  position: relative;
+  width: 100%;
+  padding-left: 13px;
+  margin-bottom: 5px;
+}
+
+.search_input {
+  all: unset;
+  height: 40px;
+  width: calc(100% - 25px);
+  color: var(--index_0_text);
+  font-family: "BasierCircle", sans-serif;
+  font-size: 14px;
+  color: var(--index_0_text);
+  font-weight: 400;
+}
+.search_input::placeholder {
+  color: var(--index_1_text);
+  font-family: "BasierCircle", sans-serif;
+  font-size: 14px;
+  color: var(--index_0_text);
+  font-weight: 400;
+}
+
+.search_icon {
+  position: absolute;
+  transform: translate(0, -50%);
+  top: 50%;
+  right: 0%;
+  margin-right: 10px;
+  height: 14px;
+  width: 14px;
+  transition: 0.3s;
+}
+.search_icon path {
+  transition: 0.3s;
+  stroke: var(--index_0_text);
+}
+
+/*# sourceMappingURL=DropDown.module.css.map */
