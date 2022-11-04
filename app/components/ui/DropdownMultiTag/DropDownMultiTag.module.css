@@ -1,0 +1,20 @@
+/* Text colors */
+/* Text Fonts */
+/* Animation */
+/* Layouts */
+.container {
+  all: unset;
+  background-color: var(--index_2_color);
+  border-radius: 6px;
+  transition: 0.3s;
+  padding: 5px 13px 5px 13px;
+  font-family: "BasierCircle", sans-serif;
+  font-size: 14px;
+  color: var(--index_0_text);
+  font-weight: 400;
+}
+.container:hover {
+  background-color: var(--index_2_5_color);
+}
+
+/*# sourceMappingURL=DropDownMultiTag.module.css.map */

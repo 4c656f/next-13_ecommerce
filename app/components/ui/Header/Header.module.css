@@ -1,0 +1,28 @@
+/* Text colors */
+/* Text Fonts */
+/* Animation */
+/* Layouts */
+.container {
+  width: 100%;
+  background-color: var(--index_1_color);
+  min-height: 58px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 7px 30px 7px 30px;
+}
+
+.sections {
+  display: flex;
+  flex-direction: row;
+  grid-gap: 10px;
+  font-family: "BasierCircle", sans-serif;
+  font-size: 14px;
+  color: var(--index_0_text);
+  font-weight: 400;
+}
+
+/*# sourceMappingURL=Header.module.css.map */

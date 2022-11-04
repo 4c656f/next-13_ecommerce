@@ -1,0 +1,66 @@
+/* Text colors */
+/* Text Fonts */
+/* Animation */
+/* Layouts */
+@keyframes header_section_appearance {
+  0% {
+    transform: translate(0, -5px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+.container {
+  background-color: var(--index_2_color) !important;
+  border-radius: 6px;
+  max-height: 70vh;
+  height: max-content;
+  max-width: 80vw;
+  grid-gap: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  animation-name: header_section_appearance;
+  animation-duration: 0.2s;
+  padding: 14px 13px 14px 13px;
+}
+
+.main_title {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  padding: 7px 13px 7px 13px;
+}
+
+.elements_container {
+  width: max-content;
+  max-height: 60vh;
+  flex-grow: 1;
+  max-width: 80vw;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  grid-gap: 10px;
+}
+
+.section_element {
+  width: max-content;
+  min-width: 200px;
+  flex-grow: 1;
+  display: flex;
+  grid-gap: 15px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.elements_button {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  grid-gap: 6px;
+}
+
+/*# sourceMappingURL=HeaderSection.module.css.map */

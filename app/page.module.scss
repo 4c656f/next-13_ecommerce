@@ -1,0 +1,5 @@
+@import '../scssMaterials/variables';
+
+.header_container{
+    @include small_padding()
+}
