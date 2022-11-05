@@ -12,7 +12,6 @@
   left: 50%;
   top: calc(100% - 20px);
   padding: 20px;
-  padding-top: 40px;
 }
 .section:hover {
   display: block;

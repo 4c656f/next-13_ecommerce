@@ -10,7 +10,7 @@ type ProductIndexLayoutProps = {
     children: ReactNode
 }
 
-export const revalidate = 3600
+export const revalidate = false
 
 async function getCategories() {
     const prisma = new PrismaClient

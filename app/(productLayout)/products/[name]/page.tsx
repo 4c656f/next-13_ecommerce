@@ -2,19 +2,16 @@ import React, {FC} from 'react';
 import {prisma} from "../../../../prisma";
 import {notFound} from "next/navigation";
 
-type PageProps = {
-    params: { name: string }
-}
-
 export const revalidate = false;
-async function getCategory(categoryName:string) {
 
-    const res = await prisma.category.findFirst({
+async function getCategory(productTypeName:string) {
+
+    const res = await prisma.productType.findFirst({
         where:{
-            name: categoryName
+            name: productTypeName
         },
         include:{
-            productType:true
+            products:true
         }
     })
     if (!res){
@@ -23,7 +20,9 @@ async function getCategory(categoryName:string) {
 
     return res;
 }
-
+type PageProps = {
+    params: { name: string }
+}
 
 
 export default async function Page(props:PageProps){
@@ -32,16 +31,16 @@ export default async function Page(props:PageProps){
         params
     } = props
 
-    const category = await getCategory(params.name)
+    const productType = await getCategory(params.name)
 
     return (
         <div>
             <h1>
                 {
-                    category.name
+                    productType.name
                 }
             </h1>
-            {category.productType.map(value=>{
+            {productType.products.map(value=>{
                 return <h2
                     key={value.id}
                 >{value.name}</h2>
@@ -52,9 +51,9 @@ export default async function Page(props:PageProps){
 
 export async function generateStaticParams() {
 
-    const categories = await prisma.category.findMany()
+    const productType = await prisma.productType.findMany()
 
-    return categories.map((value) => ({
+    return productType.map((value) => ({
         name: value.name,
     }));
 }
