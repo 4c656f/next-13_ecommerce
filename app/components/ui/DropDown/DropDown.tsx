@@ -15,7 +15,7 @@ import {ReactComponent as ArrowIcon} from "../../materials/icons/ArrowSmall.svg"
 import classes from "./DropDown.module.css"
 import {IColorIndex} from "../../../../types/IColorIndex";
 import MenuItem from "../MenuItem/MenuItem";
-import {SearchIcon} from "../../materials/icons";
+import SearchIcon from "../../../../materials/icons/Search.svg";
 import DropDownMultiTag from "../DropdownMultiTag/DropDownMultiTag";
 import {IElementsSize} from "../../../../types/IElementsSize";
 
