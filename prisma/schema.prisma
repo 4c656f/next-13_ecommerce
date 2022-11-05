@@ -46,7 +46,7 @@ model ProductType{
 model Image{
     id String @id @map("_id") @default(auto()) @db.ObjectId
     src String
-    productID String @db.ObjectId
-    product   Product   @relation(fields: [productID], references: [id])
+    productID String? @db.ObjectId
+    product   Product?   @relation(fields: [productID], references: [id])
 }
 

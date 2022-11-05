@@ -54,6 +54,7 @@ body[data-theme=dark] {
   --index_primary_text: #0B6EF9;
 }
 
+
 h1 {
   all: unset;
   color: var(--index_0_text);
