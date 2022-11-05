@@ -24,15 +24,22 @@ model Product{
     id String @id @map("_id") @default(auto()) @db.ObjectId
     name String
     image Image[]
-    categories  Category[] @relation(fields: [categoryIDs], references: [id])
-    categoryIDs String[]   @db.ObjectId
+    ProductTypeId String? @db.ObjectId
+    productType ProductType? @relation(fields: [ProductTypeId], references: [id])
 }
 
 model Category{
     id String @id @map("_id") @default(auto()) @db.ObjectId
-    product   Product[]   @relation(fields: [productIDs], references: [id])
-    productIDs String[] @db.ObjectId
+    productType   ProductType[]   @relation(fields: [productTypeIDs], references: [id])
+    productTypeIDs String[] @db.ObjectId
     name String
+}
+model ProductType{
+    id String @id @map("_id") @default(auto()) @db.ObjectId
+    name String
+    products   Product[]
+    categories Category[] @relation(fields: [categoriesIDs], references: [id])
+    categoriesIDs String[] @db.ObjectId
 }
 
 

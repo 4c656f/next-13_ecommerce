@@ -3,38 +3,41 @@ import classes from '../page.module.css'
 import HeaderItem from "../components/ui/HeaderItem/HeaderItem";
 import HeaderSection from "../components/ui/HeaderSection/HeaderSection";
 import Header from "../components/ui/Header/Header";
+import ServerHeader from "../components/Header/ServerHeader";
+import {PrismaClient} from "@prisma/client";
 
 type ProductIndexLayoutProps = {
     children: ReactNode
 }
 
-const ProductIndexLayout:FC<ProductIndexLayoutProps> = (props:ProductIndexLayoutProps) => {
+export const revalidate = 3600
+
+async function getCategories() {
+    const prisma = new PrismaClient
+    const res = await prisma.category.findMany({
+        include:{
+            productType:true
+        }
+    })
+
+    return res;
+}
+
+export default async function ProductIndexLayout (props:ProductIndexLayoutProps) {
 
     const {
         children
     } = props
 
+    const categories = await getCategories()
 
     return (
-        <div
-            className={classes.header_container}
-        >
-            <Header
-                logoSection={<h1>Logo</h1>}
-                mainSection={
-                    [<HeaderItem title={"someTitle"} key={'someKey'}>
-                        <HeaderSection
-                            sectionTitle={<h1>SomeTitle</h1>}
-                        />
-                    </HeaderItem>
-                    ]}
-                rightSection={[<h1
-                    key={'someKey'}
-                >rightSection</h1>]}
+        <>
+            <ServerHeader
+                categories={categories}
             />
             {children}
-        </div>
+        </>
     );
 };
 
-export default ProductIndexLayout;

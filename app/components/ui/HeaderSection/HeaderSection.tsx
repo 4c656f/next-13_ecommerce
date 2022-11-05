@@ -50,6 +50,7 @@ const HeaderSection: FC<HeaderSectionProps> =
                         return (
                             <div
                                 className={classes.section_element}
+                                key={value.title?.key}
                             >
                                 {value.title}
                                 <div
