@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {prisma} from "../../../../prisma";
+import {prisma} from "../../../../lib/prisma";
 import {notFound} from "next/navigation";
 import ProductCard from "../../../components/productCard/ProductCard";
 
@@ -26,7 +26,9 @@ async function getProduct(productLink:string) {
             image: true
         }
     })
+
     if (!res){
+        console.log("-------NOTFOUND")
         notFound()
     }
 

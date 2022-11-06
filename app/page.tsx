@@ -1,5 +1,5 @@
 import ServerHeader from "./components/ServerHeader/ServerHeader";
-import {prisma} from "../prisma";
+import {prisma} from "../lib/prisma";
 import ProductCard from "./components/productCard/ProductCard";
 import classes from './page.module.css'
 type HomeProps = {}
