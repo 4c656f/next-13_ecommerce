@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {prisma} from "../../../../prisma";
 import {notFound} from "next/navigation";
 
-export const revalidate = false;
+export const revalidate = 3600;
 
 async function getCategory(productTypeName:string) {
 
@@ -49,11 +49,11 @@ export default async function Page(props:PageProps){
     );
 };
 
-// export async function generateStaticParams() {
-//
-//     const productType = await prisma.productType.findMany()
-//
-//     return productType.map((value) => ({
-//         name: value.name,
-//     }));
-// }
+export async function generateStaticParams() {
+
+    const productType = await prisma.productType.findMany()
+
+    return productType.map((value) => ({
+        name: value.name,
+    }));
+}

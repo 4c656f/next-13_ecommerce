@@ -6,7 +6,7 @@ type PageProps = {
     params: { name: string }
 }
 
-export const revalidate = false;
+export const revalidate = 3600;
 async function getCategory(categoryName:string) {
 
     const res = await prisma.category.findFirst({
@@ -50,11 +50,11 @@ export default async function Page(props:PageProps){
     );
 };
 
-// export async function generateStaticParams() {
-//
-//     const categories = await prisma.category.findMany()
-//
-//     return categories.map((value) => ({
-//         name: value.name,
-//     }));
-// }
+export async function generateStaticParams() {
+
+    const categories = await prisma.category.findMany()
+
+    return categories.map((value) => ({
+        name: value.name,
+    }));
+}

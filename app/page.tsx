@@ -48,7 +48,7 @@ export default async function Home(props: HomeProps) {
                     products.map(value => {
                         return (<ProductCard
                             key={value.id}
-                            name={value.name}
+                            product={value}
                             productType={value.productType}
                             images={value.image}
                         />)

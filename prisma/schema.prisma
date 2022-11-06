@@ -24,6 +24,8 @@ model Product{
     id String @id @map("_id") @default(auto()) @db.ObjectId
     name String
     image Image[]
+    price Int?
+    link String? @unique
     ProductTypeId String? @db.ObjectId
     productType ProductType? @relation(fields: [ProductTypeId], references: [id])
 }
