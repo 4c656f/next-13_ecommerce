@@ -2,8 +2,26 @@
 /* Text Fonts */
 /* Animation */
 /* Layouts */
+.main_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  grid-gap: 20px;
+}
+
 .header_container {
   padding: 7px 13px 7px 13px;
+}
+
+.products_container {
+  display: flex;
+  align-content: center;
+  width: 80%;
+  flex-wrap: wrap;
+  grid-column-gap: 15px;
+  grid-row-gap: 20px;
 }
 
 /*# sourceMappingURL=page.module.css.map */

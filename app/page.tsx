@@ -1,7 +1,7 @@
 import ServerHeader from "./components/ServerHeader/ServerHeader";
 import {prisma} from "../prisma";
 import ProductCard from "./components/productCard/ProductCard";
-
+import classes from './page.module.css'
 type HomeProps = {}
 
 
@@ -33,22 +33,28 @@ export default async function Home(props: HomeProps) {
 
     const categories = await getCategories()
     const products = await getProducts()
-
     return (
-        <>
+        <div
+            className={classes.main_container}
+        >
 
             <ServerHeader
                 categories={categories}
             />
-            {
-                products.map(value => {
-                    return (<ProductCard
-                        name={value.name}
-                        productType={value.productType}
-                        images={value.image}
-                            />)
-                })
-            }
-        </>
+            <div
+                className={classes.products_container}
+            >
+                {
+                    products.map(value => {
+                        return (<ProductCard
+                            key={value.id}
+                            name={value.name}
+                            productType={value.productType}
+                            images={value.image}
+                        />)
+                    })
+                }
+            </div>
+        </div>
     )
 }

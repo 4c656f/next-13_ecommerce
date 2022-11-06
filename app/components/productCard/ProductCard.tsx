@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import CustomImage from "../ui/Image/CustomImage";
 import {ProductType, Image} from '@prisma/client'
 import classes from "./productCard.module.css"
+import Link from "next/link";
 
 
 type ProductCardProps = {
@@ -23,19 +24,30 @@ const ProductCard:FC<ProductCardProps> = (props:ProductCardProps) => {
         <div
             className={classes.container}
         >
-            <h1>{name}</h1>
-            <h3>{productType?.name}</h3>
+
+
             {images.map((value, index) => {
                     return (
-                        <CustomImage
+                        <Link
                             key={value.id}
-                            src={`/productpics/${value.src}`}
-                            width={500}
-                            height={500}
-                            alt={`${name} picture`}/>
+                            className={classes.image_container}
+                            href={`/product/${name}`}
+                        >
+                            <CustomImage
+
+                                src={`/productpics/${value.src}`}
+                                width={500}
+                                height={500}
+                                alt={`${name} picture`}
+
+
+                            />
+                        </Link>
                     )
 
             })}
+            <h1>{name}</h1>
+            <h3>{productType?.name}</h3>
         </div>
     );
 };

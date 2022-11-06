@@ -50,11 +50,11 @@ export default async function Page(props:PageProps){
     );
 };
 
-export async function generateStaticParams() {
-
-    const categories = await prisma.category.findMany()
-
-    return categories.map((value) => ({
-        name: value.name,
-    }));
-}
+// export async function generateStaticParams() {
+//
+//     const categories = await prisma.category.findMany()
+//
+//     return categories.map((value) => ({
+//         name: value.name,
+//     }));
+// }

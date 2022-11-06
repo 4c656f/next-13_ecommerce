@@ -28,7 +28,7 @@ export default function ServerHeader(props: ServerHeaderProps) {
             className={classes.header_container}
         >
             <Header
-                logoSection={<h1>Logo</h1>}
+                logoSection={<Link className={classes.logo_href} href={'/'}><h1>Logo</h1></Link>}
                 mainSection={
                     [<HeaderItem title={"Categories"} key={'someKey'}>
                         <HeaderSection

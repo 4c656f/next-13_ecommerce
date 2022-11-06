@@ -49,11 +49,11 @@ export default async function Page(props:PageProps){
     );
 };
 
-export async function generateStaticParams() {
-
-    const productType = await prisma.productType.findMany()
-
-    return productType.map((value) => ({
-        name: value.name,
-    }));
-}
+// export async function generateStaticParams() {
+//
+//     const productType = await prisma.productType.findMany()
+//
+//     return productType.map((value) => ({
+//         name: value.name,
+//     }));
+// }
