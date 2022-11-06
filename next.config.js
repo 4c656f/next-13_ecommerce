@@ -2,6 +2,7 @@
 const nextConfig = {
   experimental: {
     appDir: true,
+    serverComponentsExternalPackages: ['@prisma/client'],
   },
   webpack(config) {
     config.module.rules.push({
