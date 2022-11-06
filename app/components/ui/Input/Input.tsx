@@ -1,4 +1,4 @@
-import React, {FC, InputHTMLAttributes} from 'react';
+import React, {FC, InputHTMLAttributes, memo} from 'react';
 import classes from './Input.module.css'
 import {IColorIndex} from "../../../../types/IColorIndex";
 
@@ -42,4 +42,4 @@ const Input: FC<ButtonProps> = (props) => {
     );
 };
 
-export default Input;
+export default memo(Input);

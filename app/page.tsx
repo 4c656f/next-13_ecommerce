@@ -2,6 +2,7 @@ import ServerHeader from "./components/ServerHeader/ServerHeader";
 import {prisma} from "../lib/prisma";
 import ProductCard from "./components/productCard/ProductCard";
 import classes from './page.module.css'
+import ProductScroll from "./components/productScroll/productScroll";
 type HomeProps = {}
 
 
@@ -20,6 +21,8 @@ async function getCategories() {
 
 async function getProducts() {
     const res = await prisma.product.findMany({
+        skip: 0,
+        take: 10,
         include: {
             productType: true,
             image: true
@@ -33,6 +36,7 @@ export default async function Home(props: HomeProps) {
 
     const categories = await getCategories()
     const products = await getProducts()
+
     return (
         <div
             className={classes.main_container}
@@ -41,20 +45,7 @@ export default async function Home(props: HomeProps) {
             <ServerHeader
                 categories={categories}
             />
-            <div
-                className={classes.products_container}
-            >
-                {
-                    products.map(value => {
-                        return (<ProductCard
-                            key={value.id}
-                            product={value}
-                            productType={value.productType}
-                            images={value.image}
-                        />)
-                    })
-                }
-            </div>
+            <ProductScroll initialProducts={products}/>
         </div>
     )
 }

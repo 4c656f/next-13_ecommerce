@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import CustomImage from "../ui/Image/CustomImage";
 import {ProductType, Image, Product} from '@prisma/client'
 import classes from "./productCard.module.css"
@@ -58,4 +58,4 @@ const ProductCard:FC<ProductCardProps> = (props:ProductCardProps) => {
     );
 };
 
-export default ProductCard;
+export default memo(ProductCard);

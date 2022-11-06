@@ -51,6 +51,7 @@ export default async function Page(props:PageProps){
 
 export async function generateStaticParams() {
 
+    console.log('------GENERATE PRODUCTTYPE ROUTES')
     const productType = await prisma.productType.findMany()
 
     return productType.map((value) => ({

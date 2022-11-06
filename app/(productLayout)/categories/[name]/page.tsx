@@ -52,6 +52,8 @@ export default async function Page(props:PageProps){
 
 export async function generateStaticParams() {
 
+
+    console.log('------GENERATE CATEGORIES ROUTES')
     const categories = await prisma.category.findMany()
 
     return categories.map((value) => ({
