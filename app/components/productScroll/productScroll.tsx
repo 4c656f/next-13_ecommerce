@@ -1,9 +1,10 @@
 'use client';
-import React, {FC, useState, FocusEvent} from 'react';
+import React, {FC, useState, FocusEvent, useEffect} from 'react';
 import {Product, Image, ProductType} from "@prisma/client";
 import classes from "./productScroll.module.css";
 import ProductCard from "../productCard/ProductCard";
 import Input from "../ui/Input/Input";
+import {ProductService} from "../../../services/productService";
 
 
 
@@ -34,6 +35,18 @@ const ProductScroll:FC<ProductScrollProps> = (props:ProductScrollProps) => {
 
     }
 
+    useEffect(()=>{
+        console.log('----request')
+        ProductService.getProduct({
+            take: '10',
+            where: {
+                price: {lt: 7000}
+            }
+        }).then(value => {
+            console.log(value.data)
+        })
+
+    },[])
     return (
         <div
             className={classes.container}
