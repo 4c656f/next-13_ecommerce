@@ -11,7 +11,7 @@ function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <ClientProvider>
+
             <html lang="en">
             <head>
                 <title>Create Next App</title>
@@ -27,7 +27,7 @@ function RootLayout({
             </body>
 
             </html>
-        </ClientProvider>
+
 
     )
 }

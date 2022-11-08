@@ -1,7 +1,7 @@
 'use client';
 import React, {createContext, FC, ReactNode, useEffect, useState} from 'react';
-import {trpc} from "../../../../utils/trpcClient";
-import {withClientWrappers} from "../../../../utils/WithClientWrappers";
+import { ClientProvider } from '~/client/trpcClient';
+
 
 
 
@@ -30,8 +30,11 @@ const ThemeProvider: FC<ThemeProviderProps> = ({children}) => {
     }, [isDark])
 
     return (
+
         <ThemeContext.Provider value={{isDark: isDark, toggleTheme: toggleTheme}}>
-            {children}
+            <ClientProvider>
+                {children}
+            </ClientProvider>
         </ThemeContext.Provider>
     );
 };

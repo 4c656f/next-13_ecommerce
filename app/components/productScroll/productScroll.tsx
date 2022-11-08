@@ -5,7 +5,8 @@ import classes from "./productScroll.module.css";
 import ProductCard from "../productCard/ProductCard";
 import Input from "../ui/Input/Input";
 import {trpc} from "../../../utils/trpcClient";
-import {withClientWrappers} from "../../../utils/WithClientWrappers";
+import {appQueryContext} from "../../../utils/appQueryClient";
+
 
 
 
@@ -31,7 +32,7 @@ const ProductScroll:FC<ProductScrollProps> = (props:ProductScrollProps) => {
     const [inputToValue, setInputToValue] = useState('')
 
 
-    const data = trpc.product.hello.useQuery({text: "some"})
+    const res = trpc.product.useQuery('someInput')
 
     const handleBlur = (e:FocusEvent<HTMLInputElement>) => {
         if(!inputToValue&&!inputFromValue)return
@@ -39,9 +40,10 @@ const ProductScroll:FC<ProductScrollProps> = (props:ProductScrollProps) => {
     }
 
     useEffect(()=>{
-        console.log('----request')
-        console.log(data)
-    },[])
+
+
+        console.log(res.isLoading, res.data)
+    },[res.isLoading])
     return (
         <div
             className={classes.container}

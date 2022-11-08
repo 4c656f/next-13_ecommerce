@@ -1,17 +1,15 @@
 import { z } from "zod";
-import {publicProcedure, router } from "../trpcServer";
+import {publicProcedure, router, t } from "../trpcServer";
 
 
 export const productRouter = router({
-    hello: publicProcedure
+    hello: t.procedure
         .input(
             z.object({
                 text: z.string().nullish(),
             }),
         )
         .query(({ input }) => {
-            return {
-                greeting: `hello ${input?.text ?? 'world'}`,
-            };
+            return 'someResponse';
         }),
 });
