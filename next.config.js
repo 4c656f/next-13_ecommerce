@@ -5,6 +5,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
     serverComponentsExternalPackages: ['@prisma/client'],
+    scrollRestoration: true
 
   },
   productionBrowserSourceMaps: false,
