@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev & sass --watch app/:app/",
+    "dev": "next dev & sass --watch --no-source-map app/:app/" ,
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sass": "sass --watch app/:app/"
+    "sass": "sass --watch --no-source-map app/:app/"
   },
   "dependencies": {
     "@prisma/client": "^4.5.0",

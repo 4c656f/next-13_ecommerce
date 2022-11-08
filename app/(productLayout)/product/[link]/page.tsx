@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
-import {prisma} from "../../../../lib/prisma";
+import {prisma} from "../../../../utils/prisma";
 import {notFound} from "next/navigation";
-import ProductCard from "../../../components/productCard/ProductCard";
+import ProductCard from "../../../../components/server/productCard/ProductCard";
 
 type PageProps = {
     params: { link: string }

@@ -1,8 +1,8 @@
-import ServerHeader from "./components/ServerHeader/ServerHeader";
-import {prisma} from "../lib/prisma";
-import ProductCard from "./components/productCard/ProductCard";
+import ServerHeader from "../components/server/ServerHeader/ServerHeader";
+import {prisma} from "../utils/prisma";
+import ProductCard from "../components/server/productCard/ProductCard";
 import classes from './page.module.css'
-import ProductScroll from "./components/productScroll/productScroll";
+import ProductScroll from "../components/client/productScroll/productScroll";
 type HomeProps = {}
 
 

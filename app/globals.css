@@ -54,7 +54,17 @@ body[data-theme=dark] {
   --index_primary_text: #0B6EF9;
 }
 
-
+@keyframes backgroundPulse {
+  0% {
+    background-color: red;
+  }
+  50% {
+    background-color: green;
+  }
+  100% {
+    background-color: red;
+  }
+}
 h1 {
   all: unset;
   color: var(--index_0_text);

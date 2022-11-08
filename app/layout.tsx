@@ -1,8 +1,7 @@
 
 import './globals.css'
-import ThemeProvider from "./components/ui/ThemeProvider/ThemeProvider";
+import ThemeProvider from "../components/client/ThemeProvider/ThemeProvider";
 
-import {ClientProvider} from "~/client/trpcClient";
 
 
 function RootLayout({

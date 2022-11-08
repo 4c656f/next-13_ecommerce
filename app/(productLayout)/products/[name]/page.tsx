@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {prisma} from "../../../../lib/prisma";
+import {prisma} from "../../../../utils/prisma";
 import {notFound} from "next/navigation";
 
 export const revalidate = 3600;

@@ -4,7 +4,7 @@ import { default as superjson } from 'superjson';
 
 
 import { createTrpcContext } from '~/backend/trpcContext';
-import {appRouter} from "../backend/routers/_app";
+import {appRouter} from "../trcpApi/routers/_app";
 
 
 export const serverQuery = appRouter.createCaller({});

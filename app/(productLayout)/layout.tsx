@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import ServerHeader from "../components/ServerHeader/ServerHeader";
+import ServerHeader from "../../components/server/ServerHeader/ServerHeader";
 import {PrismaClient} from "@prisma/client";
 
 type ProductIndexLayoutProps = {
