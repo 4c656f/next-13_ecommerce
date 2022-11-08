@@ -1,7 +1,7 @@
-'use client';
+
 import './globals.css'
 import ThemeProvider from "./components/ui/ThemeProvider/ThemeProvider";
-import { trpc } from '../utils/trpc';
+
 import {ClientProvider} from "~/client/trpcClient";
 
 
@@ -32,4 +32,4 @@ function RootLayout({
     )
 }
 
-export default trpc.withTRPC(RootLayout)
+export default RootLayout;

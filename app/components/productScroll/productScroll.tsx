@@ -4,7 +4,8 @@ import {Product, Image, ProductType} from "@prisma/client";
 import classes from "./productScroll.module.css";
 import ProductCard from "../productCard/ProductCard";
 import Input from "../ui/Input/Input";
-import {trpc} from "../../../utils/trpc";
+import {trpc} from "../../../utils/trpcClient";
+import {withClientWrappers} from "../../../utils/WithClientWrappers";
 
 
 
@@ -30,7 +31,7 @@ const ProductScroll:FC<ProductScrollProps> = (props:ProductScrollProps) => {
     const [inputToValue, setInputToValue] = useState('')
 
 
-    const data = trpc.hello.useQuery({text: "someStr"})
+    const data = trpc.product.hello.useQuery({text: "some"})
 
     const handleBlur = (e:FocusEvent<HTMLInputElement>) => {
         if(!inputToValue&&!inputFromValue)return
@@ -39,7 +40,7 @@ const ProductScroll:FC<ProductScrollProps> = (props:ProductScrollProps) => {
 
     useEffect(()=>{
         console.log('----request')
-
+        console.log(data)
     },[])
     return (
         <div

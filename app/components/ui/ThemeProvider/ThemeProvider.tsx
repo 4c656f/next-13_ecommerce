@@ -1,6 +1,7 @@
 'use client';
 import React, {createContext, FC, ReactNode, useEffect, useState} from 'react';
-import {trpc} from "../../../../utils/trpc";
+import {trpc} from "../../../../utils/trpcClient";
+import {withClientWrappers} from "../../../../utils/WithClientWrappers";
 
 
 
