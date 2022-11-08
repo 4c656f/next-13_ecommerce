@@ -1,12 +1,14 @@
-import { z } from "zod";
-import {publicProcedure, router, t } from "../trpcServer";
+import {z} from "zod";
+import {router, t} from "../trpcServer";
 import {prisma} from '~/utils/prisma'
 
 export const productRouter = router({
-    hello: t.procedure
+    infinityProduct: t.procedure
         .input(
             z.object({
-                skip: z.number().optional(),
+                cursor: z.object({
+                    id: z.string()
+                }).optional(),
                 take: z.number().optional(),
                 where: z.object({
                     price: z.object({
@@ -17,14 +19,24 @@ export const productRouter = router({
                 }).optional()
             }),
         )
-        .query( async ({ input }) => {
+        .query(async ({input}) => {
+            const take = input.take?input.take:10
 
-            const data = await prisma.product.findMany({
-                ...input, include:{
+            const posts = await prisma.product.findMany({
+                ...input,
+                take: take+1,
+                include: {
                     productType: true,
                     image: true
-                }})
+                }
+            })
 
-            return data;
+
+            let nextCursor: typeof input.cursor | undefined = undefined;
+            if (posts.length > take) {
+                const nextItem = posts.pop()
+                nextCursor = {id: nextItem!.id};
+            }
+            return {posts, nextCursor};
         }),
 });
