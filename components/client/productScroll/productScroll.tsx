@@ -30,18 +30,25 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
     const [inputToValue, setInputToValue] = useState('')
 
 
-    const [range, setRange] = useState({gt: 0, lt: 0})
+    const [range, setRange] = useState<undefined | { lt?: number, gt?: number }>()
 
     const {
         data,
         isLoading,
         fetchNextPage,
-        isInitialLoading,
         isFetchingNextPage,
         hasNextPage,
+        isRefetching,
+        isFetching,
+
     } = trpc.product.infinityProduct.useInfiniteQuery({
-        take: 10
+        take: 10,
+        where: {
+            price: range && range
+        }
     }, {
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
         initialData: {
             pages: [{
                 posts: initialProducts,
@@ -53,23 +60,31 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
     })
 
     const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-        if (!inputToValue && !inputFromValue) return
-        setRange({gt: Number(inputFromValue), lt: Number(inputToValue)})
+
+        setRange({
+            gt: inputFromValue?Number(inputFromValue):undefined,
+            lt: inputToValue?Number(inputToValue):undefined
+        })
     }
-    useEffect(()=>{
-        console.log(isFetchingNextPage, hasNextPage, data)
+    // useEffect(() => {
+    //     console.log('isFetchingNextPage', isFetchingNextPage,
+    //         'isLoading', isLoading,
+    //         'isInitialLoading',isInitialLoading,
+    //         'isRefetching',isRefetching,
+    //         'isFetching',isFetching,
+    //     )
+    // }, [isFetchingNextPage, isLoading, isInitialLoading,isRefetching,isFetching])
 
 
-    },[isFetchingNextPage])
-
+    //OBSERVER EFFECT
     useEffect(() => {
         if (!hasNextPage) {
             if (observerRef.current) observerRef.current.disconnect();
             return;
         }
         ;
-        if (observerRef.current)observerRef.current.disconnect();
-        if(isFetchingNextPage)return;
+        if (observerRef.current) observerRef.current.disconnect();
+        if (isFetching) return;
         const observerRefCallback = (entries: any[]) => {
 
             if (entries[0].isIntersecting && !isLoading) {
@@ -82,7 +97,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
         observerRef.current = new IntersectionObserver(observerRefCallback)
         observerRef.current.observe(elemRef.current)
 
-    }, [isFetchingNextPage, hasNextPage])
+    }, [isFetching])
 
     return (
         <div
@@ -106,7 +121,8 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
                 />
 
             </div>
-            <div
+
+            {isRefetching?<h1>Loading...</h1>:<div
                 className={classes.product_container}
             >
                 {data?.pages.map((TData, index) => {
@@ -128,8 +144,8 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
 
 
                 })}
-            </div>
-            {isFetchingNextPage&&<h1>...Loading</h1>}
+            </div>}
+            {isFetchingNextPage && <h1>...Loading</h1>}
             <div
                 ref={elemRef}
                 style={{

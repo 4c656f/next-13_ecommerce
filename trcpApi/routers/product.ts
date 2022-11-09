@@ -28,7 +28,8 @@ export const productRouter = router({
                 include: {
                     productType: true,
                     image: true
-                }
+                },
+                orderBy: {price: 'asc'}
             })
 
 

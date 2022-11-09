@@ -26,6 +26,9 @@ async function getProducts() {
         include: {
             productType: true,
             image: true
+        },
+        orderBy: {
+            price: 'asc'
         }
     })
 
