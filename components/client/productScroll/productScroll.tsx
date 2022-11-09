@@ -2,10 +2,11 @@
 import React, {FC, FocusEvent, useEffect, useRef, useState} from 'react';
 import {Image, Product, ProductType} from "@prisma/client";
 import classes from "./productScroll.module.css";
-import ProductCard from "../../server/productCard/ProductCard";
-import Input from "../../ui/Input/Input";
+import ProductCard, {ProductCardPlaceholder} from "../../server/productCard/ProductCard";
 import {trpc} from "../../../utils/trpcClient";
-
+import Button from "~/components/ui/Button/Button";
+import {AtMostOneOf} from "~/types/IAtMostOne";
+import ArrowIcon from '~/materials/icons/arrow-left.svg'
 
 type ProductIncludes = {
     image: Image[]
@@ -26,6 +27,12 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
     const elemRef = useRef<any>(null)
     const observerRef = useRef<any>(null)
 
+
+    const [orderBy, setOrderBy] = useState<AtMostOneOf<{
+        price: boolean,
+        name: boolean,
+    }>>({price: true})
+
     const [inputFromValue, setInputFromValue] = useState('')
     const [inputToValue, setInputToValue] = useState('')
 
@@ -36,8 +43,10 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
         data,
         isLoading,
         fetchNextPage,
+        isInitialLoading,
         isFetchingNextPage,
         hasNextPage,
+        refetch,
         isRefetching,
         isFetching,
 
@@ -45,25 +54,30 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
         take: 10,
         where: {
             price: range && range
-        }
+        },
+        orderBy: orderBy
     }, {
         refetchOnMount: false,
         refetchOnWindowFocus: false,
         initialData: {
             pages: [{
-                posts: initialProducts,
-                nextCursor: {id: initialProducts[initialProducts.length - 1].id}
+                nextCursor: {id: initialProducts[initialProducts.length - 1].id},
+                posts: initialProducts.slice(0, initialProducts.length - 1),
+
             }],
             pageParams: []
         },
         getNextPageParam: (lastPage) => lastPage.nextCursor,
     })
 
+    useEffect(() => {
+        console.log(orderBy)
+    }, [orderBy])
     const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
 
         setRange({
-            gt: inputFromValue?Number(inputFromValue):undefined,
-            lt: inputToValue?Number(inputToValue):undefined
+            gt: inputFromValue ? Number(inputFromValue) : undefined,
+            lt: inputToValue ? Number(inputToValue) : undefined
         })
     }
     // useEffect(() => {
@@ -78,16 +92,11 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
 
     //OBSERVER EFFECT
     useEffect(() => {
-        if (!hasNextPage) {
-            if (observerRef.current) observerRef.current.disconnect();
-            return;
-        }
-        ;
         if (observerRef.current) observerRef.current.disconnect();
-        if (isFetching) return;
+        if (isFetching || !hasNextPage) return;
         const observerRefCallback = (entries: any[]) => {
 
-            if (entries[0].isIntersecting && !isLoading) {
+            if (entries[0].isIntersecting) {
                 console.log('intersecting')
                 fetchNextPage()
             }
@@ -97,7 +106,22 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
         observerRef.current = new IntersectionObserver(observerRefCallback)
         observerRef.current.observe(elemRef.current)
 
-    }, [isFetching])
+    }, [isFetching, hasNextPage])
+
+
+    const handleOrderClick = (type: "price" | "name") => {
+
+        setOrderBy((prevState => {
+            if (type in prevState) {
+                return {
+                    [type]: !prevState[type]
+                }
+            }
+            return {
+                [type]: true
+            }
+        }))
+    }
 
     return (
         <div
@@ -106,26 +130,36 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
             <div
                 className={classes.filters_container}
             >
-                <h3>PriceFilter</h3>
-                <Input
-                    placeholder={'from'}
-                    value={inputFromValue}
-                    onChange={event => setInputFromValue(event.target.value)}
-                    onBlur={handleBlur}
-                />
-                <Input
-                    placeholder={'to'}
-                    value={inputToValue}
-                    onChange={event => setInputToValue(event.target.value)}
-                    onBlur={handleBlur}
-                />
+                <h3>Order by:</h3>
+                <Button
+                    onClick={() => handleOrderClick('price')}
+                    icon={
+                        <ArrowIcon
+                            className={classes.icon}
+                            data-isactive={orderBy?.price===undefined?null:orderBy.price&&true}
+                        />
+                    }
+                    defaultIconStyles={true}
+                >
+                    <span>price</span>
+                </Button>
+                <Button
+
+                    onClick={() => handleOrderClick('name')}
+                    icon={<ArrowIcon
+                        className={classes.icon}
+                        data-isactive={orderBy?.name===undefined?null:orderBy.name&&true}
+                    />}
+                    defaultIconStyles={true}
+                >
+                    <span>name</span>
+                </Button>
 
             </div>
-
-            {isRefetching?<h1>Loading...</h1>:<div
+            <div
                 className={classes.product_container}
             >
-                {data?.pages.map((TData, index) => {
+                {!isRefetching?data?.pages.map((TData, index) => {
 
                     const {
                         posts
@@ -143,9 +177,12 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
                     })
 
 
-                })}
-            </div>}
+                }):<ProductCardPlaceholder/>
+
+                }
+            </div>
             {isFetchingNextPage && <h1>...Loading</h1>}
+            {!hasNextPage && <h1>that all</h1>}
             <div
                 ref={elemRef}
                 style={{

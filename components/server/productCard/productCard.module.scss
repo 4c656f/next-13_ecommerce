@@ -19,3 +19,30 @@
   height: 160px;
   width: 100%;
 }
+@keyframes backgroundPulseSceleton {
+  0% {
+    background-color: var(--index_1_color);
+  }
+  50% {
+    background-color: var(--index_2_color);
+  }
+  100% {
+    background-color: var(--index_1_color);
+  }
+}
+.sceleton_image{
+  height: 160px;
+  width: 100%;
+  animation-name: backgroundPulseSceleton;
+  border-radius: $border_radius;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+.sceleton_property{
+  height: 20px;
+  width: 100%;
+  border-radius: $border-radius;
+  animation-name: backgroundPulseSceleton;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}

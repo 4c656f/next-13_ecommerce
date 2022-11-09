@@ -1,3 +1,4 @@
+@import '../../../scssMaterials/variables';
 .container{
   width: 80%;
   display: flex;
@@ -20,4 +21,17 @@
   flex-wrap: wrap;
   grid-column-gap: 15px;
   grid-row-gap: 20px;
+}
+.icon{
+  opacity: 0;
+  transition: $default_transition;
+}
+
+.icon[data-isactive='true']{
+  opacity: 1;
+  transform: rotate(90deg);
+}
+.icon[data-isactive='false']{
+  opacity: 1;
+  transform: rotate(-90deg);
 }

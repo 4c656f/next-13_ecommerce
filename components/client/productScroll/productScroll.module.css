@@ -1,3 +1,7 @@
+/* Text colors */
+/* Text Fonts */
+/* Animation */
+/* Layouts */
 .container {
   width: 80%;
   display: flex;
@@ -23,4 +27,17 @@
   grid-row-gap: 20px;
 }
 
-/*# sourceMappingURL=productScroll.module.css.map */
+.icon {
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.icon[data-isactive=true] {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+.icon[data-isactive=false] {
+  opacity: 1;
+  transform: rotate(-90deg);
+}

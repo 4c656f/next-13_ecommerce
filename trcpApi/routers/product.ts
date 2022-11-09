@@ -16,20 +16,31 @@ export const productRouter = router({
                         gt: z.number().optional()
                     }).optional(),
                     name: z.string().optional()
+                }).optional(),
+                orderBy: z.object({
+                    price: z.boolean().optional(),
+                    name: z.boolean().optional()
                 }).optional()
             }),
         )
         .query(async ({input}) => {
             const take = input.take?input.take:10
+            const {
+                orderBy
+            } = input
 
             const posts = await prisma.product.findMany({
                 ...input,
                 take: take+1,
+
                 include: {
                     productType: true,
                     image: true
                 },
-                orderBy: {price: 'asc'}
+                orderBy:{
+                    price: orderBy?.price===undefined?undefined:orderBy.price?'asc':'desc',
+                    name: orderBy?.name===undefined?undefined:orderBy.name?'asc':'desc'
+                }
             })
 
 

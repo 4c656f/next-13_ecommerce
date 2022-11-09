@@ -11,7 +11,7 @@ type ProductCardProps = {
     images: Image[]
 }
 
-const ProductCard:FC<ProductCardProps> = (props:ProductCardProps) => {
+const ProductCard= (props:ProductCardProps) => {
 
     const {
         product:{
@@ -57,5 +57,32 @@ const ProductCard:FC<ProductCardProps> = (props:ProductCardProps) => {
         </div>
     );
 };
+export function ProductCardPlaceholder (){
+    return(
+        <>
+            {Array.from(Array(10).keys()).map(value => {
+                return(
+                    <div
+                        key={value}
+                        className={classes.container}
+                    >
+
+                        <div
+                            className={classes.sceleton_image}
+                        >
+                        </div>
+                        <div
+                            className={classes.sceleton_property}
+                        ></div>
+                        <div
+                            className={classes.sceleton_property}
+                        ></div>
+                    </div>
+                )
+            })
+            }
+        </>
+    )
+}
 
 export default memo(ProductCard);

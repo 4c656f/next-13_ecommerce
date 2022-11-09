@@ -65,7 +65,7 @@ const Button = <E extends ElementType = typeof defaultElement>(
         >
             {children}
             {icon&&defaultIconStyles?cloneElement(icon, {
-               className: `${icon.props.className} ${classes.icon}`
+               className: `${classes.icon} ${icon.props.className}`
             }):icon}
         </Element>
     );
