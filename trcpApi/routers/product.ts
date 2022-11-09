@@ -18,9 +18,9 @@ export const productRouter = router({
                     name: z.string().optional()
                 }).optional(),
                 orderBy: z.object({
-                    price: z.boolean().optional(),
-                    name: z.boolean().optional()
-                }).optional()
+                    price: z.literal('asc').optional().or(z.literal('desc').optional()),
+                    name: z.literal('asc').optional().or(z.literal('desc').optional())
+                })
             }),
         )
         .query(async ({input}) => {
@@ -29,6 +29,7 @@ export const productRouter = router({
                 orderBy
             } = input
 
+            console.log(orderBy)
             const posts = await prisma.product.findMany({
                 ...input,
                 take: take+1,
@@ -37,10 +38,7 @@ export const productRouter = router({
                     productType: true,
                     image: true
                 },
-                orderBy:{
-                    price: orderBy?.price===undefined?undefined:orderBy.price?'asc':'desc',
-                    name: orderBy?.name===undefined?undefined:orderBy.name?'asc':'desc'
-                }
+
             })
 
 

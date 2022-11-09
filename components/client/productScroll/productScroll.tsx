@@ -7,6 +7,7 @@ import {trpc} from "../../../utils/trpcClient";
 import Button from "~/components/ui/Button/Button";
 import {AtMostOneOf} from "~/types/IAtMostOne";
 import ArrowIcon from '~/materials/icons/arrow-left.svg'
+import useHandleProductScroll from "~/hooks/handleProductScroll/useHandleProductScroll";
 
 type ProductIncludes = {
     image: Image[]
@@ -39,24 +40,17 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
 
     const [range, setRange] = useState<undefined | { lt?: number, gt?: number }>()
 
+    const {state, actions, dispatch} = useHandleProductScroll()
+
     const {
         data,
-        isLoading,
         fetchNextPage,
-        isInitialLoading,
         isFetchingNextPage,
         hasNextPage,
-        refetch,
         isRefetching,
         isFetching,
 
-    } = trpc.product.infinityProduct.useInfiniteQuery({
-        take: 10,
-        where: {
-            price: range && range
-        },
-        orderBy: orderBy
-    }, {
+    } = trpc.product.infinityProduct.useInfiniteQuery(state, {
         refetchOnMount: false,
         refetchOnWindowFocus: false,
         initialData: {
@@ -110,18 +104,12 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
 
 
     const handleOrderClick = (type: "price" | "name") => {
-
-        setOrderBy((prevState => {
-            if (type in prevState) {
-                return {
-                    [type]: !prevState[type]
-                }
-            }
-            return {
-                [type]: true
-            }
-        }))
+        dispatch({type: actions.HandleOrder, payload: {value: type}})
     }
+    useEffect(()=>{
+        console.log('reducerChanged')
+        console.log(state.orderBy)
+    },[state])
 
     return (
         <div
@@ -136,7 +124,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
                     icon={
                         <ArrowIcon
                             className={classes.icon}
-                            data-isactive={orderBy?.price===undefined?null:orderBy.price&&true}
+                            data-isactive={state.orderBy?.price===undefined?null:state.orderBy?.price==='asc'}
                         />
                     }
                     defaultIconStyles={true}
@@ -148,7 +136,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
                     onClick={() => handleOrderClick('name')}
                     icon={<ArrowIcon
                         className={classes.icon}
-                        data-isactive={orderBy?.name===undefined?null:orderBy.name&&true}
+                        data-isactive={state.orderBy?.name===undefined?null:state.orderBy?.name==='asc'}
                     />}
                     defaultIconStyles={true}
                 >
