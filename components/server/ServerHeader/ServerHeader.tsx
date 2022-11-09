@@ -7,6 +7,7 @@ import ArrowIcon from "../../../materials/icons/arrow-left.svg";
 import Link from "next/link";
 import Header from "../../ui/Header/Header";
 import classes from "./serverHeader.module.css";
+import ToggleTheme from "~/components/client/toggleTheme/ToggleTheme";
 
 
 type CategoryInclude = Category & {productType: ProductType[]}
@@ -70,9 +71,11 @@ export default function ServerHeader(props: ServerHeaderProps) {
                         />
                     </HeaderItem>
                     ]}
-                // rightSection={[
-                //     <Button href={'/product/2'} as={Link}>Link</Button>
-                // ]}
+                rightSection={[
+                    <ToggleTheme
+                        key={'someRandom'}
+                    />
+                ]}
             />
         </div>
     );
