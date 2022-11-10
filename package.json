@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev & sass --watch --no-source-map app/:app/ components/:components/" ,
+    "dev": "next dev & sass --watch --no-source-map app/:app/ components/:components/",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -19,9 +19,11 @@
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
     "next": "13.0.1",
+    "next-auth": "^4.16.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "zod": "^3.19.1"
+    "zod": "^3.19.1",
+    "zustand": "^4.1.4"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.5.1",

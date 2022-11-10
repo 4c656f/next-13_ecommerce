@@ -1,9 +1,12 @@
+'use client'
 import React, {FC, memo} from 'react';
 import CustomImage from "../../ui/Image/CustomImage";
 import {ProductType, Image, Product, Prisma} from '@prisma/client'
 import classes from "./productCard.module.css"
 import Link from "next/link";
 import NestedLink from "~/components/ui/NestedLink/NestedLink";
+import Button from "~/components/ui/Button/Button";
+import {useCartStore} from "~/store/cartStore";
 
 
 type ProductCardProps = {
@@ -31,7 +34,7 @@ const ProductCard= (props:ProductCardProps) => {
             image
         },
     } = props
-
+    const increaseCartCount = useCartStore(state => state.increaseCartCount)
 
     return (
         <div
@@ -73,6 +76,10 @@ const ProductCard= (props:ProductCardProps) => {
                 >{productType?.name}</Link>
 
             </NestedLink>
+            <Button
+                onClick={increaseCartCount}
+
+            ><span>add to cart</span></Button>
         </div>
     );
 };

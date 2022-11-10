@@ -1,7 +1,7 @@
 'use client';
 import React, {createContext, FC, ReactNode, useEffect, useState} from 'react';
 import { ClientProvider } from '~/components/client/trpcClient';
-
+import { SessionProvider } from 'next-auth/react';
 
 
 
@@ -32,9 +32,13 @@ const ThemeProvider: FC<ThemeProviderProps> = ({children}) => {
     return (
 
         <ThemeContext.Provider value={{isDark: isDark, toggleTheme: toggleTheme}}>
-            <ClientProvider>
-                {children}
-            </ClientProvider>
+            <SessionProvider
+                refetchOnWindowFocus={false}
+            >
+                <ClientProvider>
+                    {children}
+                </ClientProvider>
+            </SessionProvider>
         </ThemeContext.Provider>
     );
 };

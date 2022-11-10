@@ -8,6 +8,7 @@ import Link from "next/link";
 import Header from "../../ui/Header/Header";
 import classes from "./serverHeader.module.css";
 import ToggleTheme from "~/components/client/toggleTheme/ToggleTheme";
+import HeaderCart from "~/components/client/HeaderCart/HeaderCart";
 
 
 type CategoryInclude = Category & {productTypes: ProductType[]}
@@ -74,6 +75,9 @@ export default function ServerHeader(props: ServerHeaderProps) {
                 rightSection={[
                     <ToggleTheme
                         key={'someRandom'}
+                    />,
+                    <HeaderCart
+                        key={'someRandom2'}
                     />
                 ]}
             />
