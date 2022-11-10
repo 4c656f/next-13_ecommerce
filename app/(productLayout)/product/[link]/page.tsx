@@ -24,7 +24,11 @@ async function getProduct(productLink:string) {
             link: productLink
         },
         include:{
-            productType:true,
+            productType: {
+                include: {
+                    category: true
+                }
+            },
             image: true
         }
     })
@@ -50,8 +54,7 @@ const Page = async (props:PageProps) => {
         <div>
             <ProductCard
                 product={product}
-                productType={product.productType}
-                images={product.image}
+
             />
         </div>
     );
