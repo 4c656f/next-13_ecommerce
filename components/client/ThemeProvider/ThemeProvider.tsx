@@ -32,13 +32,11 @@ const ThemeProvider: FC<ThemeProviderProps> = ({children}) => {
     return (
 
         <ThemeContext.Provider value={{isDark: isDark, toggleTheme: toggleTheme}}>
-            <SessionProvider
-                refetchOnWindowFocus={false}
-            >
+
                 <ClientProvider>
                     {children}
                 </ClientProvider>
-            </SessionProvider>
+
         </ThemeContext.Provider>
     );
 };
