@@ -14,7 +14,7 @@ async function getCategory(categoryName:string) {
             name: categoryName
         },
         include:{
-            productType:true
+            productTypes:true
         }
     })
     if (!res){
@@ -41,7 +41,7 @@ export default async function Page(props:PageProps){
                     category.name
                 }
             </h1>
-            {category.productType.map(value=>{
+            {category.productTypes.map(value=>{
                 return <h2
                     key={value.id}
                 >{value.name}</h2>

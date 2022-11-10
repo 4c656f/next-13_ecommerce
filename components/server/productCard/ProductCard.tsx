@@ -1,14 +1,23 @@
 import React, {FC, memo} from 'react';
 import CustomImage from "../../ui/Image/CustomImage";
-import {ProductType, Image, Product} from '@prisma/client'
+import {ProductType, Image, Product, Prisma} from '@prisma/client'
 import classes from "./productCard.module.css"
 import Link from "next/link";
+import NestedLink from "~/components/ui/NestedLink/NestedLink";
 
 
 type ProductCardProps = {
-    product: Product;
-    productType: ProductType | null;
-    images: Image[]
+    product: Prisma.ProductGetPayload<{
+    include:{
+        image: true;
+        productType:{
+            include:{
+                category: true
+            }
+        }
+    }
+}>;
+
 }
 
 const ProductCard= (props:ProductCardProps) => {
@@ -17,11 +26,10 @@ const ProductCard= (props:ProductCardProps) => {
         product:{
             name,
             link,
-            price
+            price,
+            productType,
+            image
         },
-        productType,
-
-        images
     } = props
 
 
@@ -31,7 +39,7 @@ const ProductCard= (props:ProductCardProps) => {
         >
 
 
-            {images.map((value, index) => {
+            {image.map((value, index) => {
                     return (
                         <Link
                             key={value.id}
@@ -41,8 +49,9 @@ const ProductCard= (props:ProductCardProps) => {
                             <CustomImage
 
                                 src={`/productpics/${value.src}`}
-                                width={500}
-                                height={500}
+                                width={224}
+                                height={160}
+                                quality={70}
                                 alt={`${name} picture`}
 
 
@@ -53,7 +62,17 @@ const ProductCard= (props:ProductCardProps) => {
             })}
             <h1>{name}</h1>
             <h1>{price}</h1>
-            <h3>{productType?.name}</h3>
+            <NestedLink>
+                <Link
+                    href={`/categories/${productType?.category?.name}`}
+                    className={classes.link}
+                >{productType?.category?.name}</Link>
+                <Link
+                    href={`/products/${productType?.name}`}
+                    className={classes.link}
+                >{productType?.name}</Link>
+
+            </NestedLink>
         </div>
     );
 };

@@ -8,6 +8,7 @@ type CustomImageProps = {
     height: number;
     alt: string;
     className?: string
+    quality?: number
 
 }
 
@@ -19,6 +20,7 @@ const CustomImage:FC<CustomImageProps> = (props:CustomImageProps) => {
         alt,
         height,
         className,
+        quality
     } = props
 
     const [isLoaded, setIsLoaded]= useState(false)
@@ -37,10 +39,14 @@ const CustomImage:FC<CustomImageProps> = (props:CustomImageProps) => {
             <Image
                 src={src}
                 alt={alt}
-                width={width}
                 height={height}
+                width={width}
+                quality={quality}
                 className={`${classes.image} ${className?className:""}`}
                 onLoad={()=>setIsLoaded(true)}
+                priority={true}
+                style={{objectFit: 'cover'}}
+                // fill={true}
             />
         </div>
     );

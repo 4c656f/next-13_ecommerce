@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import ServerHeader from "../../components/server/ServerHeader/ServerHeader";
-import {PrismaClient} from "@prisma/client";
+import {prisma} from "~/utils/prisma";
 
 type ProductIndexLayoutProps = {
     children: ReactNode
@@ -9,10 +9,10 @@ type ProductIndexLayoutProps = {
 export const revalidate = 3600
 
 async function getCategories() {
-    const prisma = new PrismaClient
+
     const res = await prisma.category.findMany({
         include: {
-            productType: true
+            productTypes: true
         }
     })
 

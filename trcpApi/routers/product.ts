@@ -35,7 +35,11 @@ export const productRouter = router({
                 take: take+1,
 
                 include: {
-                    productType: true,
+                    productType: {
+                        include: {
+                            category: true
+                        }
+                    },
                     image: true
                 },
 

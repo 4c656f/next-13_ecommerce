@@ -12,6 +12,7 @@
   left: 50%;
   top: calc(100% - 20px);
   padding: 20px;
+  padding-top: 40px;
   z-index: 2;
 }
 .section:hover {
@@ -20,5 +21,3 @@
 .section:hover ~ .button {
   background-color: var(--index_1_5_color);
 }
-
-/*# sourceMappingURL=HeaderItem.module.css.map */

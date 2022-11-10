@@ -128,3 +128,7 @@ span{
     @include default_h4();
 
 }
+a{
+    color: var(--index_0_text);
+    @include default_h4();
+}

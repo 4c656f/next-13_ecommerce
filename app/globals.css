@@ -109,3 +109,11 @@ span {
   color: var(--index_0_text);
   font-weight: 400;
 }
+
+a {
+  color: var(--index_0_text);
+  font-family: "BasierCircle", sans-serif;
+  font-size: 14px;
+  color: var(--index_0_text);
+  font-weight: 400;
+}

@@ -12,7 +12,7 @@ async function getCategories() {
 
     const res = await prisma.category.findMany({
         include: {
-            productType: true
+            productTypes: true,
         }
     })
 
@@ -24,7 +24,11 @@ async function getProducts() {
         skip: 0,
         take: 10,
         include: {
-            productType: true,
+            productType: {
+                include: {
+                    category: true
+                }
+            },
             image: true
         },
         orderBy: {

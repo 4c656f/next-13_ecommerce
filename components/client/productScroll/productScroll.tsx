@@ -1,6 +1,6 @@
 'use client';
 import React, {FC, FocusEvent, useEffect, useRef, useState} from 'react';
-import {Image, Product, ProductType} from "@prisma/client";
+import {Image, Product, ProductType, Prisma} from "@prisma/client";
 import classes from "./productScroll.module.css";
 import ProductCard, {ProductCardPlaceholder} from "../../server/productCard/ProductCard";
 import {trpc} from "../../../utils/trpcClient";
@@ -9,14 +9,21 @@ import {AtMostOneOf} from "~/types/IAtMostOne";
 import ArrowIcon from '~/materials/icons/arrow-left.svg'
 import useHandleProductScroll from "~/hooks/handleProductScroll/useHandleProductScroll";
 
-type ProductIncludes = {
-    image: Image[]
-    productType: ProductType | null
-} & Product
+
+
 
 
 type ProductScrollProps = {
-    initialProducts: (Product & { image: Image[]; productType: ProductType | null; })[]
+    initialProducts: Prisma.ProductGetPayload<{
+        include:{
+            image: true;
+            productType:{
+                include:{
+                    category: true
+                }
+            }
+        }
+    }>[]
 }
 
 const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
@@ -158,8 +165,6 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
                             <ProductCard
                                 key={value.id}
                                 product={value}
-                                productType={value.productType}
-                                images={value.image}
                             />
                         )
                     })

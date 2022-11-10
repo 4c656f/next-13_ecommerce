@@ -32,16 +32,15 @@ model Product{
 
 model Category{
     id String @id @map("_id") @default(auto()) @db.ObjectId
-    productType   ProductType[]   @relation(fields: [productTypeIDs], references: [id])
-    productTypeIDs String[] @db.ObjectId
+    productTypes   ProductType[]
     name String
 }
 model ProductType{
     id String @id @map("_id") @default(auto()) @db.ObjectId
     name String
     products   Product[]
-    categories Category[] @relation(fields: [categoriesIDs], references: [id])
-    categoriesIDs String[] @db.ObjectId
+    category Category? @relation(fields: [categoryID], references: [id])
+    categoryID String? @db.ObjectId
 }
 
 

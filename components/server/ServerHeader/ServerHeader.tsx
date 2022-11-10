@@ -10,7 +10,7 @@ import classes from "./serverHeader.module.css";
 import ToggleTheme from "~/components/client/toggleTheme/ToggleTheme";
 
 
-type CategoryInclude = Category & {productType: ProductType[]}
+type CategoryInclude = Category & {productTypes: ProductType[]}
 
 type ServerHeaderProps = {
     categories : CategoryInclude[]
@@ -51,7 +51,7 @@ export default function ServerHeader(props: ServerHeaderProps) {
                                             >
                                                 <h3>{value.name}</h3>
                                             </Button>,
-                                        elements: value.productType.map((value, index) => {
+                                        elements: value.productTypes.map((value, index) => {
                                             return (
                                                 <Button
                                                     colorIndex={'1'}
