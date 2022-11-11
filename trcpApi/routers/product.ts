@@ -1,9 +1,9 @@
 import {z} from "zod";
-import {router, t} from "../trpcServer";
+import {publicProcedure, router, t} from "../trpcServer";
 import {prisma} from '~/utils/prisma'
 
 export const productRouter = router({
-    infinityProduct: t.procedure
+    infinityProduct: publicProcedure
         .input(
             z.object({
                 cursor: z.object({

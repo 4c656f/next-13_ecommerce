@@ -2,6 +2,7 @@
 import React, {createContext, FC, ReactNode, useEffect, useState} from 'react';
 import { ClientProvider } from '~/components/client/trpcClient';
 import { SessionProvider } from 'next-auth/react';
+import {trpc} from "~/utils/trpcClient";
 
 
 
@@ -25,7 +26,13 @@ const ThemeProvider: FC<ThemeProviderProps> = ({children}) => {
         setIsDark((prevState) => !prevState)
     }
 
+
+    useEffect(()=>{
+        console.log('mount')
+    },[])
+
     useEffect(() => {
+
         document.body.dataset.theme = isDark ? 'dark' : 'light'
     }, [isDark])
 

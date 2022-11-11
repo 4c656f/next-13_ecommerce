@@ -1,7 +1,8 @@
 'use client'
 import React, {FC} from 'react';
-import {useSession} from "next-auth/react";
+
 import {redirect} from "next/navigation";
+import {trpc} from "~/utils/trpcClient";
 
 type PageProps = {
 
@@ -13,18 +14,10 @@ const Page:FC<PageProps> = (props:PageProps) => {
 
     } = props
 
-    const {data, status} = useSession({
-        required: true,
-        onUnauthenticated(){
-            redirect('/')
-        }
-    })
 
-    if(status=== 'loading'){
-        return (
-            <span>...loading</span>
-        )
-    }
+
+    const {isLoading, data} = trpc.user.hello.useQuery({login: "some"})
+
     return (
         <div>
             <span>access</span>

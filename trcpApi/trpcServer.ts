@@ -1,28 +1,28 @@
-import { initTRPC } from '@trpc/server';
+import {initTRPC, TRPCError} from '@trpc/server';
+import {TrpcContext} from "~/trcpApi/trpcContext";
+import {is} from "@babel/types/lib/index-legacy";
 
-export const t = initTRPC.create();
+export const t = initTRPC.context<TrpcContext>().create();
 // Base router and procedure helpers
 
 export const router = t.router;
+
+const isAuthed = t.middleware(({ next, ctx }) => {
+
+    const {isAuth} = ctx
+
+    if(!isAuth){
+        throw new TRPCError({
+            code: 'UNAUTHORIZED',
+            message: 'Bad token'
+        })
+    }
+
+    return next();
+});
+
+
 export const publicProcedure = t.procedure;
 
-/**
- * Reusable middleware that checks if users are authenticated.
- * @note Example only, yours may vary depending on how your auth is setup
- **/
-// const isAuthed = t.middleware(({ next, ctx }) => {
-//   if (!ctx.session?.user?.email) {
-//     throw new TRPCError({
-//       code: 'UNAUTHORIZED',
-//     });
-//   }
-//   return next({
-//     ctx: {
-//       // Infers the `session` as non-nullable
-//       session: ctx.session,
-//     },
-//   });
-// });
 
-// // Protected procedures for logged in users only
-// export const protectedProcedure = t.procedure.use(isAuthed);
+export const protectedProcedure = t.procedure.use(isAuthed);

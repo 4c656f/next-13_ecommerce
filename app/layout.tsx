@@ -7,7 +7,6 @@ import ThemeProvider from "../components/client/ThemeProvider/ThemeProvider";
 
 
 
-
 function RootLayout({children}: {
     children: React.ReactNode
 }) {
