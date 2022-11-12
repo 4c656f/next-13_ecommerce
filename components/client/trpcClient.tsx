@@ -35,7 +35,7 @@ export function ClientProvider(props: { children: React.ReactNode }) {
             onError: (error) => {
                 console.log('errorMiddleware')
                 setIsUser(false)
-                console.log(error)
+                // console.log(error)
                 // if (error instanceof TRPCError){
                 //     const httpCode = getHTTPStatusCodeFromError(error);
                 //

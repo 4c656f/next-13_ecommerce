@@ -9,21 +9,41 @@ import Header from "../../ui/Header/Header";
 import classes from "./serverHeader.module.css";
 import ToggleTheme from "~/components/client/toggleTheme/ToggleTheme";
 import HeaderCart from "~/components/client/HeaderCart/HeaderCart";
+import {cookies} from "next/headers";
+import {RequestCookie} from "next/dist/server/web/spec-extension/cookies";
+import {prisma} from "~/utils/prisma";
 
 
 type CategoryInclude = Category & {productTypes: ProductType[]}
 
 type ServerHeaderProps = {
-    categories : CategoryInclude[]
+    // categories : CategoryInclude[]
+}
+export const revalidate = 3600
+
+async function getCategories() {
+
+    const res = await prisma.category.findMany({
+        include: {
+            productTypes: true,
+        }
+    })
+
+    return res;
 }
 
-export default function ServerHeader(props: ServerHeaderProps) {
+
+
+
+export default async function ServerHeader(props: ServerHeaderProps) {
 
     const {
-        categories
+
     } = props
 
 
+
+    const categories = await getCategories()
 
     return (
         <div

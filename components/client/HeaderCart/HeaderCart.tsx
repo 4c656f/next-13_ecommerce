@@ -10,7 +10,12 @@ type HeaderCartProps = {
 const HeaderCart:FC<HeaderCartProps> = (props:HeaderCartProps) => {
 
     const {cartCount, increaseCartCount} = useCartStore()
+
     const isUser = useUserStore(state => state.isUser)
+
+
+
+
     const {
         
     } = props

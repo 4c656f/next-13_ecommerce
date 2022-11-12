@@ -5,32 +5,24 @@ import {serializeCookie, signToken, validateToken} from "~/utils/tokenMethods";
 export default async function middleware(request: NextRequest, fetch:NextFetchEvent) {
 
 
-    const validateAccess = await validateToken(request.cookies.get('access_token')?.value, 'access')
-    const validateRefresh = await validateToken(request.cookies.get('refresh_token')?.value, 'refresh')
+    const validateRefresh = await validateToken(request.cookies.get('refresh_token')?.value)
 
-    console.log(validateRefresh,validateAccess)
+    const response = NextResponse
 
-    if(validateAccess){
-        return;
-    }
     if(validateRefresh){
-        const {access, refresh} = await signToken({someKey: 'string'})
+        const {refresh} = await signToken({someKey: 'string'})
 
-        const accessToken = serializeCookie('access_token', access, 60*60)
 
         const refreshToken = serializeCookie('refresh_token', refresh, 60 * 60 * 24 * 30)
 
-
-        const resp = NextResponse.next()
-
-        resp.headers.set('Set-Cookie', `${accessToken}; ${refreshToken}`)
-        return resp
+        const nextResp = response.next()
+        nextResp.headers.set('Set-Cookie', refreshToken)
+        return nextResp
     }
-
 
     const url = request.nextUrl.clone()
     url.pathname = '/'
-    return NextResponse.redirect(url)
+    return response.redirect(url).cookies.delete('refresh_token')
 }
 
 export const config = {

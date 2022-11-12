@@ -6,18 +6,8 @@ type ProductIndexLayoutProps = {
     children: ReactNode
 }
 
-export const revalidate = 3600
 
-async function getCategories() {
 
-    const res = await prisma.category.findMany({
-        include: {
-            productTypes: true
-        }
-    })
-
-    return res;
-}
 
 export default async function ProductIndexLayout(props: ProductIndexLayoutProps) {
 
@@ -25,12 +15,13 @@ export default async function ProductIndexLayout(props: ProductIndexLayoutProps)
         children
     } = props
 
-    const categories = await getCategories()
+
 
     return (
         <>
+            {/*@ts-ignore*/}
             <ServerHeader
-                categories={categories}
+
             />
             {children}
         </>

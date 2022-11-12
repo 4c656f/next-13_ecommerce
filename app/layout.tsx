@@ -1,18 +1,22 @@
 
 import './globals.css'
 import ThemeProvider from "../components/client/ThemeProvider/ThemeProvider";
+import {cookies} from "next/headers";
+import {NextApiRequestCookies} from "next/dist/server/api-utils";
+import {ReadonlyRequestCookies} from "next/dist/server/app-render";
+import {ClientProvider} from "~/components/client/trpcClient";
 
 
 
 
 
-
-function RootLayout({children}: {
+async function RootLayout({children}: {
     children: React.ReactNode
 }) {
 
 
 
+    
 
 
 
@@ -26,10 +30,11 @@ function RootLayout({children}: {
             </head>
 
             <body>
-
-            <ThemeProvider>
-                {children}
-            </ThemeProvider>
+            <ClientProvider>
+                <ThemeProvider>
+                    {children}
+                </ThemeProvider>
+            </ClientProvider>
             </body>
 
             </html>

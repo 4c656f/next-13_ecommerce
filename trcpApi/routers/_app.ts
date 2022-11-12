@@ -1,11 +1,11 @@
 import {router} from "../trpcServer";
 import {productRouter} from "./product";
-import {protectedRoute} from "~/trcpApi/routers/protectedRoute";
+import {userRoute} from "~/trcpApi/routers/userRoute";
 
 
 export const appRouter = router({
     product: productRouter,
-    user: protectedRoute
+    user: userRoute
 });
 
 export type AppRouter = typeof appRouter;

@@ -11,13 +11,13 @@ import * as trpcNext from '@trpc/server/adapters/next';
 export const createTrpcContext = async (opts: trpcNext.CreateNextContextOptions)=> {
 
 
-    const session = opts.req.cookies;
+    const requestCookies = opts.req.cookies;
 
-    if (session?.['access_token']) {
-        return {isAuth: true}
+    if (requestCookies?.['refresh_token']) {
+        return {refreshToken: requestCookies['refresh_token']}
     }
 
-    return {isAuth: false}
+    return {refreshToken: undefined}
 };
 
 export type TrpcContext = inferAsyncReturnType<typeof createTrpcContext>;

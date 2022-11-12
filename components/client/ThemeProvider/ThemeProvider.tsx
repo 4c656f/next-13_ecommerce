@@ -3,10 +3,12 @@ import React, {createContext, FC, ReactNode, useEffect, useState} from 'react';
 import { ClientProvider } from '~/components/client/trpcClient';
 import { SessionProvider } from 'next-auth/react';
 import {trpc} from "~/utils/trpcClient";
+import {useUserStore} from "~/store/userStore";
 
 
 
 type ThemeProviderProps = {
+
     children: ReactNode
 }
 
@@ -17,9 +19,29 @@ export const ThemeContext = createContext({
     }
 })
 
-const ThemeProvider: FC<ThemeProviderProps> = ({children}) => {
+const ThemeProvider: FC<ThemeProviderProps> = (props) => {
+
+
+    const {
+        children
+    }=props
 
     const [isDark, setIsDark] = useState(true)
+
+
+    const setIsUser = useUserStore(state => state.setIsUser)
+
+
+    const {data ,isLoading, isFetching} = trpc.user.validateSession.useQuery()
+
+    useEffect(()=>{
+        console.log(data,isLoading,isFetching, 'fetchSession------')
+        if(!data){
+            setIsUser(false)
+            return
+        }
+        setIsUser(data.status)
+    },[isFetching, isLoading])
 
 
     const toggleTheme = (): void => {
@@ -27,9 +49,6 @@ const ThemeProvider: FC<ThemeProviderProps> = ({children}) => {
     }
 
 
-    useEffect(()=>{
-        console.log('mount')
-    },[])
 
     useEffect(() => {
 
@@ -40,9 +59,7 @@ const ThemeProvider: FC<ThemeProviderProps> = ({children}) => {
 
         <ThemeContext.Provider value={{isDark: isDark, toggleTheme: toggleTheme}}>
 
-                <ClientProvider>
-                    {children}
-                </ClientProvider>
+            {children}
 
         </ThemeContext.Provider>
     );

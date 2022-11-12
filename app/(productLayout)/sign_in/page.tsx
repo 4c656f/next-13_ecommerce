@@ -21,7 +21,7 @@ const SignInPage: FC<SignInPageProps> = (props: SignInPageProps) => {
         console.log(resp)
     }
 
-    const {refetch, data} = trpc.user.hello.useQuery({login: 'somestr'}, {retry: false})
+
 
     return (
         <div>
@@ -32,9 +32,7 @@ const SignInPage: FC<SignInPageProps> = (props: SignInPageProps) => {
                 onClick={handleClick}
             ><h1>sign in</h1></Button>
             <Link href={'/protectedRoute'}><h1>protected</h1></Link>
-            <Button
-                onClick={()=>refetch()}
-            ><span>fetchProtectedApi</span></Button>
+
         </div>
     );
 };
