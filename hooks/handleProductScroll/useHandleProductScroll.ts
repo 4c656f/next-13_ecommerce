@@ -1,6 +1,5 @@
 import {IReducerAction} from "~/types/IReducerAction";
 import {Dispatch, useReducer} from "react";
-import {AtMostOneOf} from "~/types/IAtMostOne";
 
 
 enum HandleProductScrollActions {
@@ -9,8 +8,8 @@ enum HandleProductScrollActions {
 }
 
 type Actions =
-    | IReducerAction<HandleProductScrollActions.HandleWherePrice, {price: { lt?: number; gt?: number }}>
-    | IReducerAction<HandleProductScrollActions.HandleOrder, {value: 'price'|'name'}>
+    | IReducerAction<HandleProductScrollActions.HandleWherePrice, { price: { lt?: number; gt?: number } }>
+    | IReducerAction<HandleProductScrollActions.HandleOrder, { value: 'price' | 'name' }>
 
 
 export interface IHandleProductScrollState {
@@ -21,9 +20,9 @@ export interface IHandleProductScrollState {
             gt?: number
         }
     },
-    orderBy:{
-        price?: 'asc' | 'desc' ;
-        name?: 'asc' | 'desc' ;
+    orderBy: {
+        price?: 'asc' | 'desc';
+        name?: 'asc' | 'desc';
     }
 }
 
@@ -40,7 +39,7 @@ interface InputInit {
 }
 
 interface useHandleProductScrollArgs {
-    (): {state: IHandleProductScrollState, dispatch: Dispatch<Actions>, actions:typeof HandleProductScrollActions}
+    (): { state: IHandleProductScrollState, dispatch: Dispatch<Actions>, actions: typeof HandleProductScrollActions }
 }
 
 
@@ -49,7 +48,7 @@ const useHandleProductScroll: useHandleProductScrollArgs = () => {
     type Reducer<State, Actions> = (s: State, a: Actions) => State
 
     const HandleProductScrollReducer: Reducer<typeof HandleProductScrollInitState, Actions> = (state,
-                                                                                         action) => {
+                                                                                               action) => {
 
         switch (action.type) {
             case HandleProductScrollActions.HandleWherePrice:
@@ -57,7 +56,7 @@ const useHandleProductScroll: useHandleProductScrollArgs = () => {
                     price
                 } = action.payload
 
-                return {...state,where: {price}};
+                return {...state, where: {price}};
 
 
             case HandleProductScrollActions.HandleOrder:
@@ -66,22 +65,17 @@ const useHandleProductScroll: useHandleProductScrollArgs = () => {
                     value
                 } = action.payload
 
-                const orderBy:any = {
+                const orderBy: any = {}
 
-                }
-
-                if(value in state.orderBy){
-                    if(state.orderBy[value] === 'asc'){
+                if (value in state.orderBy) {
+                    if (state.orderBy[value] === 'asc') {
                         orderBy[value] = 'desc'
-                    }else{
+                    } else {
                         orderBy[value] = 'asc'
                     }
-                }else{
+                } else {
                     orderBy[value] = 'asc'
                 }
-
-
-
 
 
                 return {
@@ -98,9 +92,7 @@ const useHandleProductScroll: useHandleProductScrollArgs = () => {
     const [state, dispatch] = useReducer(HandleProductScrollReducer, HandleProductScrollInitState)
 
 
-
-
-    return {state:state, dispatch:dispatch, actions:HandleProductScrollActions}
+    return {state: state, dispatch: dispatch, actions: HandleProductScrollActions}
 
 }
 

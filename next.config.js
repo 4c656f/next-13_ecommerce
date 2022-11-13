@@ -2,28 +2,28 @@
 const nextConfig = {
 
 
-  experimental: {
-    appDir: true,
-    serverComponentsExternalPackages: ['@prisma/client'],
-    scrollRestoration: true,
+    experimental: {
+        appDir: true,
+        serverComponentsExternalPackages: ['@prisma/client'],
+        scrollRestoration: false,
 
 
-  },
-  productionBrowserSourceMaps: false,
-  webpack(config) {
+    },
+    productionBrowserSourceMaps: false,
+    webpack(config) {
 
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: [{
-        loader: '@svgr/webpack',
-        options: {
-          Memo: true
-        }
-      }],
-    });
+        config.module.rules.push({
+            test: /\.svg$/,
+            use: [{
+                loader: '@svgr/webpack',
+                options: {
+                    Memo: true
+                }
+            }],
+        });
 
-    return config;
-  }
+        return config;
+    }
 }
 
 module.exports = nextConfig

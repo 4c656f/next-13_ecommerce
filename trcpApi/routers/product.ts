@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {publicProcedure, router, t} from "../trpcServer";
+import {publicProcedure, router} from "../trpcServer";
 import {prisma} from '~/utils/prisma'
 
 export const productRouter = router({
@@ -24,7 +24,7 @@ export const productRouter = router({
             }),
         )
         .query(async ({input}) => {
-            const take = input.take?input.take:10
+            const take = input.take ? input.take : 10
             const {
                 orderBy
             } = input
@@ -32,7 +32,7 @@ export const productRouter = router({
             console.log(orderBy)
             const posts = await prisma.product.findMany({
                 ...input,
-                take: take+1,
+                take: take + 1,
 
                 include: {
                     productType: {

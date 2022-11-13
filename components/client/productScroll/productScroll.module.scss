@@ -1,11 +1,13 @@
 @import '../../../scssMaterials/variables';
-.container{
+
+.container {
   width: 80%;
   display: flex;
   flex-direction: column;
   grid-gap: 20px;
 }
-.filters_container{
+
+.filters_container {
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -13,7 +15,8 @@
   grid-gap: 10px;
 
 }
-.product_container{
+
+.product_container {
   display: flex;
   align-content: center;
   justify-content: center;
@@ -22,16 +25,18 @@
   grid-column-gap: 15px;
   grid-row-gap: 20px;
 }
-.icon{
+
+.icon {
   opacity: 0;
   transition: $default_transition;
 }
 
-.icon[data-isactive='true']{
+.icon[data-isactive='true'] {
   opacity: 1;
   transform: rotate(90deg);
 }
-.icon[data-isactive='false']{
+
+.icon[data-isactive='false'] {
   opacity: 1;
   transform: rotate(-90deg);
 }

@@ -1,21 +1,15 @@
 import {z} from "zod";
-import {publicProcedure, router, t} from "../trpcServer";
-import {protectedProcedure} from "~/trcpApi/trpcMiddlewares";
+import {publicProcedure, router} from "../trpcServer";
 
+export const userRouter = router({
+    signIn: publicProcedure
+        .input(z.object({}))
+        .query(async ({input}) => {
+            console.log('login query')
+        }),
+    signUp: publicProcedure
+        .input(z.object({}))
+        .mutation(async ({input}) => {
 
-
-export const userRoute = router({
-    validateSession: protectedProcedure
-        .input(
-            z.string().optional()
-        )
-        .query(async ({input, ctx}) => {
-
-            if (ctx?.user)
-
-            console.log(ctx?.user)
-
-            return{status: true}
-
-        })
+        }),
 });

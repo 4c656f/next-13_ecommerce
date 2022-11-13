@@ -10,6 +10,10 @@
   padding: 0;
 }
 
+div [data-nextjs-scroll-focus-boundary] {
+  height: 100%;
+}
+
 body {
   --index_0_color: #000000;
   --index_1_color: #131313;

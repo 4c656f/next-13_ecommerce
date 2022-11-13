@@ -1,1 +1,1 @@
-export type ButtonType = "text" | "contained" | "outlined"| "link"
+export type ButtonType = "text" | "contained" | "outlined" | "link"

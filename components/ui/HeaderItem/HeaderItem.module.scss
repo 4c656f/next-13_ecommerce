@@ -1,7 +1,8 @@
 .container {
   all: unset;
-  &:hover{
-    & > .section{
+
+  &:hover {
+    & > .section {
       display: block;
     }
   }
@@ -23,7 +24,8 @@
 
   &:hover {
     display: block;
-    & ~ .button{
+
+    & ~ .button {
       background-color: var(--index_1_5_color);
     }
   }

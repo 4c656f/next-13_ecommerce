@@ -1,4 +1,4 @@
-import { createTRPCReact, httpBatchLink } from '@trpc/react-query';
+import {createTRPCReact} from '@trpc/react-query';
 
 
 import {AppRouter} from "../trcpApi/routers/_app";

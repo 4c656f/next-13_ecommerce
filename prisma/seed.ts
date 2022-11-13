@@ -14,25 +14,25 @@ const ids = {
     players: '636ccecbcb0ef3e763d12294'
 }
 const getIndex = (index: number): string => {
-    if(index<5){
+    if (index < 5) {
         return ids.laptops
     }
-    if(index<10){
+    if (index < 10) {
         return ids.phones
     }
-    if(index<15){
+    if (index < 15) {
         return ids.top
     }
-    if(index<20){
+    if (index < 20) {
         return ids.vinyl
     }
-    if(index<25){
+    if (index < 25) {
         return ids.bottom
     }
-    if(index<30){
+    if (index < 30) {
         return ids.tabels
     }
-    if(index<35){
+    if (index < 35) {
         return ids.players
     }
     return ids.players

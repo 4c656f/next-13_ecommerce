@@ -9,7 +9,7 @@ export type IGetModelQuery = {
     query?: IPrismaMongoQueryEnum
 }
 
-const obj:IGetModelQuery = {
+const obj: IGetModelQuery = {
     model: 'Image',
 
 }

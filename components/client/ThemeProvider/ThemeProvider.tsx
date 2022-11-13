@@ -1,10 +1,7 @@
 'use client';
 import React, {createContext, FC, ReactNode, useEffect, useState} from 'react';
-import { ClientProvider } from '~/components/client/trpcClient';
-import { SessionProvider } from 'next-auth/react';
 import {trpc} from "~/utils/trpcClient";
 import {useUserStore} from "~/store/userStore";
-
 
 
 type ThemeProviderProps = {
@@ -24,7 +21,7 @@ const ThemeProvider: FC<ThemeProviderProps> = (props) => {
 
     const {
         children
-    }=props
+    } = props
 
     const [isDark, setIsDark] = useState(true)
 
@@ -32,22 +29,20 @@ const ThemeProvider: FC<ThemeProviderProps> = (props) => {
     const setIsUser = useUserStore(state => state.setIsUser)
 
 
-    const {data ,isLoading, isFetching} = trpc.user.validateSession.useQuery()
+    const {data, isLoading, isFetching} = trpc.protected.getSession.useQuery()
 
-    useEffect(()=>{
-        console.log(data,isLoading,isFetching, 'fetchSession------')
-        if(!data){
-            setIsUser(false)
-            return
-        }
-        setIsUser(data.status)
-    },[isFetching, isLoading])
+
+    useEffect(() => {
+
+        if (isLoading)return
+        if(!data)return;
+        setIsUser({isUser: true, userNickname: data.userName})
+    }, [isFetching, isLoading])
 
 
     const toggleTheme = (): void => {
         setIsDark((prevState) => !prevState)
     }
-
 
 
     useEffect(() => {

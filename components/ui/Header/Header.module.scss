@@ -1,6 +1,6 @@
 @import '../../../scssMaterials/variables';
 
-.container{
+.container {
   width: 100%;
   background-color: var(--index_1_color);
   min-height: 58px;
@@ -14,7 +14,8 @@
 
   @include small_padding($horizontal: 30px)
 }
-.sections{
+
+.sections {
   display: flex;
   flex-direction: row;
   grid-gap: 10px;

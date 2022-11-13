@@ -1,0 +1,27 @@
+.container{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  grid-gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.btn{
+  width: 100%;
+  justify-content: center;
+}
+
+.form:invalid .btn{
+  pointer-events: none;
+
+}
+.form:invalid .btn h3{
+  color: var(--index_1_text);
+
+}

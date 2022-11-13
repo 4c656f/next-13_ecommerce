@@ -1,6 +1,6 @@
 @import "../../../scssMaterials/variables";
 
-.container{
+.container {
 
   width: 250px;
   height: auto;
@@ -11,14 +11,16 @@
   justify-content: flex-start;
   align-items: center;
   grid-gap: 10px;
-  border-radius: $border_radius ;
+  border-radius: $border_radius;
   background-color: var(--index_1_color);
   @include small_padding($vertical: 12px)
 }
-.image_container{
+
+.image_container {
   height: 160px;
   width: 100%;
 }
+
 @keyframes backgroundPulseSceleton {
   0% {
     background-color: var(--index_1_color);
@@ -30,7 +32,8 @@
     background-color: var(--index_1_color);
   }
 }
-.sceleton_image{
+
+.sceleton_image {
   height: 160px;
   width: 100%;
   animation-name: backgroundPulseSceleton;
@@ -38,7 +41,8 @@
   animation-duration: 2s;
   animation-iteration-count: infinite;
 }
-.sceleton_property{
+
+.sceleton_property {
   height: 20px;
   width: 100%;
   border-radius: $border-radius;
@@ -46,7 +50,8 @@
   animation-duration: 2s;
   animation-iteration-count: infinite;
 }
-.link{
+
+.link {
   color: var(--index_0_text);
 
 }

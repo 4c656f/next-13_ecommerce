@@ -1,0 +1,93 @@
+/* Text colors */
+/* Text Fonts */
+/* Animation */
+/* Layouts */
+.input {
+  all: unset;
+  color: var(--index_0_text);
+  font-family: "BasierCircle", sans-serif;
+  transition: 0.3s;
+  border-radius: 6px;
+  font-family: "BasierCircle", sans-serif;
+  font-size: 14px;
+  color: var(--index_0_text);
+  font-weight: 400;
+  padding: 10px 16px 10px 10px;
+}
+
+.main_container {
+  width: max-content;
+  height: max-content;
+  position: relative;
+}
+
+.input:focus::placeholder {
+  opacity: 0;
+}
+
+.input::placeholder {
+  color: var(--index_2_text);
+  transition: 0.3s;
+  font-family: "BasierCircle", sans-serif;
+  font-size: 14px;
+  color: var(--index_0_text);
+  font-weight: 300;
+}
+
+.color_0_index {
+  background-color: var(--index_1_color);
+}
+.color_1_index {
+  background-color: var(--index_3_color);
+}
+.color_2_index {
+  background-color: var(--index_1_color);
+}
+.color_action_index {
+  background-color: var(--index_3_color);
+}
+.icon {
+  position: absolute;
+  right: calc(0% + 24px);
+  transform: translate(0%, -50%);
+  top: 50%;
+  height: 14px;
+  width: 14px;
+  transition: 0.3s;
+}
+.icon path {
+  transition: 0.3s;
+  stroke: var(--index_0_text);
+}
+
+.input:invalid[data-left=true] ~ .error_message {
+  display: block;
+}
+
+.input:invalid[data-left=true] {
+  border-color: red;
+}
+
+.small {
+  padding: 7px 13px 7px 13px;
+}
+
+.medium {
+  padding: 10px 16px 10px 16px;
+}
+
+.large {
+  padding: 14px 17px 14px 17px;
+}
+
+.error_message {
+  color: red;
+  display: none;
+  position: absolute;
+  top: calc(0% - 10px);
+  left: calc(0% + 10px);
+  font-size: 10px;
+  background-color: #ffe1e1;
+  border-radius: 5px;
+  padding: 2px 4px 2px 4px;
+}

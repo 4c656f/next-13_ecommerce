@@ -3,15 +3,11 @@ import React, {FC, useContext} from 'react';
 import Button from "~/components/ui/Button/Button";
 import {ThemeContext} from "~/components/client/ThemeProvider/ThemeProvider";
 
-type ToggleThemeProps = {
+type ToggleThemeProps = {}
 
-}
+const ToggleTheme: FC<ToggleThemeProps> = (props: ToggleThemeProps) => {
 
-const ToggleTheme:FC<ToggleThemeProps> = (props:ToggleThemeProps) => {
-
-    const {
-
-    } = props
+    const {} = props
 
     const {toggleTheme} = useContext(ThemeContext)
 

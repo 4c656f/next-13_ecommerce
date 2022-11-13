@@ -2,6 +2,7 @@
 import React, {FC, useState} from 'react';
 import Image from 'next/image';
 import classes from './customImage.module.css'
+
 type CustomImageProps = {
     src: string;
     width: number;
@@ -12,7 +13,7 @@ type CustomImageProps = {
 
 }
 
-const CustomImage:FC<CustomImageProps> = (props:CustomImageProps) => {
+const CustomImage: FC<CustomImageProps> = (props: CustomImageProps) => {
 
     const {
         src,
@@ -23,18 +24,18 @@ const CustomImage:FC<CustomImageProps> = (props:CustomImageProps) => {
         quality
     } = props
 
-    const [isLoaded, setIsLoaded]= useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
 
     return (
         <div
             className={classes.container}
         >
-            {!isLoaded?
+            {!isLoaded ?
                 <div
                     className={classes.placeholder}
                 >
 
-                </div>:null
+                </div> : null
             }
             <Image
                 src={src}
@@ -42,8 +43,8 @@ const CustomImage:FC<CustomImageProps> = (props:CustomImageProps) => {
                 height={height}
                 width={width}
                 quality={quality}
-                className={`${classes.image} ${className?className:""}`}
-                onLoad={()=>setIsLoaded(true)}
+                className={`${classes.image} ${className ? className : ""}`}
+                onLoad={() => setIsLoaded(true)}
                 priority={true}
                 style={{objectFit: 'cover'}}
                 // fill={true}

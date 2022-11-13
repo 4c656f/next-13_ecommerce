@@ -2,34 +2,29 @@ import {TRPCError} from "@trpc/server";
 import {t} from "~/trcpApi/trpcServer";
 import {validateToken} from "~/utils/tokenMethods";
 
-const isAuthed = t.middleware(async ({ next, ctx }) => {
+const isAuthed = t.middleware(async ({next, ctx}) => {
 
     const {refreshToken} = ctx
 
-    if(!refreshToken){
+    if (!refreshToken) {
         throw new TRPCError({
             code: 'UNAUTHORIZED',
             message: 'Bad token'
         })
     }
 
-    let payload
-    try {
-        payload = await validateToken(refreshToken)
+    const payload = await validateToken(refreshToken)
 
-    }catch (e) {
+    if(!payload){
         throw new TRPCError({
             code: 'UNAUTHORIZED',
-            message: 'Bad token'
+            message: 'Invalid token'
         })
     }
-
-
-
 
     return next({
-        ctx:{
-            user: payload
+        ctx: {
+            userName: payload?.userName as string
         }
     });
 });

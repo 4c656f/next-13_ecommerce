@@ -2,13 +2,12 @@ import React, {FC, ReactElement} from 'react';
 import classes from './HeaderSection.module.css'
 
 
-
 export type headerSectionHelper = {
     title?: string;
-    [key: string|number]: any;
+    [key: string | number]: any;
     elements?: {
         label?: string;
-        [key: string|number]: any;
+        [key: string | number]: any;
     }[]
 }
 

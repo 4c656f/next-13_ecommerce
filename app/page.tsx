@@ -1,18 +1,15 @@
 import ServerHeader from "../components/server/ServerHeader/ServerHeader";
 import {prisma} from "../utils/prisma";
-import ProductCard from "../components/server/productCard/ProductCard";
 import classes from './page.module.css'
 import ProductScroll from "../components/client/productScroll/productScroll";
-import {cookies} from "next/headers";
+
 type HomeProps = {}
 
 
 // export const revalidate = 3600
 
 
-
 async function getProducts() {
-
 
 
     const res = await prisma.product.findMany({
@@ -37,10 +34,7 @@ async function getProducts() {
 export default async function Home(props: HomeProps) {
 
 
-
     const products = await getProducts()
-
-
 
 
     return (

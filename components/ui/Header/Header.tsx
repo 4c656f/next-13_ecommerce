@@ -1,14 +1,4 @@
-import React, {
-    Children,
-    cloneElement,
-    ComponentProps,
-    ElementType,
-    FC,
-    isValidElement,
-    PropsWithChildren,
-    ReactElement, useEffect
-} from 'react';
-import HeaderItem from '../HeaderItem/HeaderItem';
+import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import classes from './Header.module.css'
 
 type props = {
@@ -21,7 +11,7 @@ type HeaderProps = {
     rightSection?: ReactElement<any, any>[],
 }
 
-const Header:FC<HeaderProps> = (props:HeaderProps) => {
+const Header: FC<HeaderProps> = (props: HeaderProps) => {
 
     const {
         logoSection,
@@ -51,7 +41,7 @@ const Header:FC<HeaderProps> = (props:HeaderProps) => {
             >
                 {rightSection}
             </section>
-            
+
         </header>
     );
 };

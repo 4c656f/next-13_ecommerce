@@ -25,9 +25,9 @@ export type IPrismaMongoQueryEnum2 = {
 
 }
 
-type Models = AtMostOneOf<{[k in keyof typeof Prisma.ModelName]: IPrismaMongoQueryEnum2[`${k}`] }>
+type Models = AtMostOneOf<{ [k in keyof typeof Prisma.ModelName]: IPrismaMongoQueryEnum2[`${k}`] }>
 
-type query<K extends  IModels> = {
+type query<K extends IModels> = {
     model: K;
     where: IPrismaMongoQueryEnum2[K]['where']
     skip: number;

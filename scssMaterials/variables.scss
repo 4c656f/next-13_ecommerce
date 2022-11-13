@@ -1,4 +1,3 @@
-
 // Elements schemes
 
 $index_0_element: (
@@ -158,6 +157,7 @@ $default_transition: 0.3s;
     stroke: var(--index_0_text);
   }
 }
+
 @mixin default_svg_layout() {
   position: absolute;
   right: calc(0% + 24px);
@@ -166,7 +166,7 @@ $default_transition: 0.3s;
 }
 
 
-@mixin styling_scrollbar(){
+@mixin styling_scrollbar() {
   /* width */
   &::-webkit-scrollbar {
     width: 8px;
@@ -187,7 +187,6 @@ $default_transition: 0.3s;
     background-clip: padding-box;
 
     background-color: var(--index_2_color);
-
 
 
     border-radius: 9999px;

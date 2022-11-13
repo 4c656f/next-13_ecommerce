@@ -1,18 +1,18 @@
 @import '../../../scssMaterials/variables';
 
 @keyframes header_section_appearance {
-  0%{
+  0% {
     transform: translate(0, -5px);
     opacity: 0;
   }
-  100%{
+  100% {
     transform: translate(0, 0);
     opacity: 1;
   }
 
 }
 
-.container{
+.container {
 
   background-color: var(--index_2_color) !important;
   border-radius: $border_radius;
@@ -29,7 +29,8 @@
   @include small_padding($vertical: 14px)
 
 }
-.main_title{
+
+.main_title {
   width: 100%;
   display: flex;
   align-items: flex-start;
@@ -37,10 +38,12 @@
   @include small_padding()
 
 }
-.section_title_elements{
+
+.section_title_elements {
 
 }
-.elements_container{
+
+.elements_container {
 
   width: max-content;
   max-height: 60vh;
@@ -53,8 +56,6 @@
   grid-gap: 10px;
 
 
-
-
   //@include small_padding()
   //flex-direction: column;
   //align-content: start;
@@ -62,10 +63,12 @@
   //flex-direction: column;
   //grid-gap: 20px;
 }
-.section_title{
+
+.section_title {
 
 }
-.section_element{
+
+.section_element {
   width: max-content;
   min-width: 200px;
 
@@ -76,7 +79,8 @@
   flex-direction: column;
   //width: 200px;
 }
-.elements_button{
+
+.elements_button {
   display: flex;
   width: 100%;
   flex-direction: column;

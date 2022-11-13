@@ -1,6 +1,6 @@
 'use client';
 import React, {FC, FocusEvent, useEffect, useRef, useState} from 'react';
-import {Image, Product, ProductType, Prisma} from "@prisma/client";
+import {Prisma} from "@prisma/client";
 import classes from "./productScroll.module.css";
 import ProductCard, {ProductCardPlaceholder} from "../../server/productCard/ProductCard";
 import {trpc} from "../../../utils/trpcClient";
@@ -10,15 +10,12 @@ import ArrowIcon from '~/materials/icons/arrow-left.svg'
 import useHandleProductScroll from "~/hooks/handleProductScroll/useHandleProductScroll";
 
 
-
-
-
 type ProductScrollProps = {
     initialProducts: Prisma.ProductGetPayload<{
-        include:{
+        include: {
             image: true;
-            productType:{
-                include:{
+            productType: {
+                include: {
                     category: true
                 }
             }
@@ -113,10 +110,10 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
     const handleOrderClick = (type: "price" | "name") => {
         dispatch({type: actions.HandleOrder, payload: {value: type}})
     }
-    useEffect(()=>{
+    useEffect(() => {
         console.log('reducerChanged')
         console.log(state.orderBy)
-    },[state])
+    }, [state])
 
     return (
         <div
@@ -131,7 +128,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
                     icon={
                         <ArrowIcon
                             className={classes.icon}
-                            data-isactive={state.orderBy?.price===undefined?null:state.orderBy?.price==='asc'}
+                            data-isactive={state.orderBy?.price === undefined ? null : state.orderBy?.price === 'asc'}
                         />
                     }
                     defaultIconStyles={true}
@@ -143,7 +140,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
                     onClick={() => handleOrderClick('name')}
                     icon={<ArrowIcon
                         className={classes.icon}
-                        data-isactive={state.orderBy?.name===undefined?null:state.orderBy?.name==='asc'}
+                        data-isactive={state.orderBy?.name === undefined ? null : state.orderBy?.name === 'asc'}
                     />}
                     defaultIconStyles={true}
                 >
@@ -154,7 +151,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
             <div
                 className={classes.product_container}
             >
-                {!isRefetching?data?.pages.map((TData, index) => {
+                {!isRefetching ? data?.pages.map((TData, index) => {
 
                     const {
                         posts
@@ -170,7 +167,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
                     })
 
 
-                }):<ProductCardPlaceholder/>
+                }) : <ProductCardPlaceholder/>
 
                 }
             </div>

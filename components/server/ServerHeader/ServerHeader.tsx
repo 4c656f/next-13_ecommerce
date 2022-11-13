@@ -1,5 +1,5 @@
 import React from 'react';
-import {PrismaClient, Category, ProductType} from "@prisma/client";
+import {Category, ProductType} from "@prisma/client";
 import HeaderItem from "../../ui/HeaderItem/HeaderItem";
 import HeaderSection from "../../ui/HeaderSection/HeaderSection";
 import Button from "../../ui/Button/Button";
@@ -9,12 +9,10 @@ import Header from "../../ui/Header/Header";
 import classes from "./serverHeader.module.css";
 import ToggleTheme from "~/components/client/toggleTheme/ToggleTheme";
 import HeaderCart from "~/components/client/HeaderCart/HeaderCart";
-import {cookies} from "next/headers";
-import {RequestCookie} from "next/dist/server/web/spec-extension/cookies";
 import {prisma} from "~/utils/prisma";
 
 
-type CategoryInclude = Category & {productTypes: ProductType[]}
+type CategoryInclude = Category & { productTypes: ProductType[] }
 
 type ServerHeaderProps = {
     // categories : CategoryInclude[]
@@ -33,14 +31,9 @@ async function getCategories() {
 }
 
 
-
-
 export default async function ServerHeader(props: ServerHeaderProps) {
 
-    const {
-
-    } = props
-
+    const {} = props
 
 
     const categories = await getCategories()

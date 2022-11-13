@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {prisma} from "../../../../utils/prisma";
 import {notFound} from "next/navigation";
 import ProductCard from "../../../../components/server/productCard/ProductCard";
@@ -17,13 +17,14 @@ export async function generateStaticParams() {
         link: value.link,
     }));
 }
-async function getProduct(productLink:string) {
+
+async function getProduct(productLink: string) {
 
     const res = await prisma.product.findFirst({
-        where:{
+        where: {
             link: productLink
         },
-        include:{
+        include: {
             productType: {
                 include: {
                     category: true
@@ -33,7 +34,7 @@ async function getProduct(productLink:string) {
         }
     })
 
-    if (!res){
+    if (!res) {
         console.log("-------NOTFOUND")
         notFound()
     }
@@ -41,7 +42,7 @@ async function getProduct(productLink:string) {
     return res;
 }
 
-const Page = async (props:PageProps) => {
+const Page = async (props: PageProps) => {
 
     const {
         params

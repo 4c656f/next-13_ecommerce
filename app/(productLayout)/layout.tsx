@@ -1,12 +1,10 @@
 import React, {ReactNode} from 'react';
 import ServerHeader from "../../components/server/ServerHeader/ServerHeader";
-import {prisma} from "~/utils/prisma";
+import classes from "./layoutClasses.module.css"
 
 type ProductIndexLayoutProps = {
     children: ReactNode
 }
-
-
 
 
 export default async function ProductIndexLayout(props: ProductIndexLayoutProps) {
@@ -16,15 +14,20 @@ export default async function ProductIndexLayout(props: ProductIndexLayoutProps)
     } = props
 
 
-
     return (
-        <>
+        <main
+            className={classes.main_container}
+        >
             {/*@ts-ignore*/}
             <ServerHeader
 
             />
-            {children}
-        </>
+            <div
+                className={classes.content_container}
+            >
+                {children}
+            </div>
+        </main>
     );
 };
 

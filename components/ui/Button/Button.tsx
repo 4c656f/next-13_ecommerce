@@ -1,11 +1,8 @@
-import React, {cloneElement, ComponentProps, ElementType, FC, ReactElement, ReactNode} from 'react';
+import React, {cloneElement, ComponentProps, ElementType, ReactElement, ReactNode} from 'react';
 import classes from "./Button.module.css"
 import {IColorIndex} from "../../../types/IColorIndex";
 import {ButtonType} from "../../../types/IElementType";
 import {IElementsSize} from "../../../types/IElementsSize";
-
-
-
 
 
 type ButtonCustomProps<E extends ElementType = ElementType> = {
@@ -64,9 +61,9 @@ const Button = <E extends ElementType = typeof defaultElement>(
             {...rest}
         >
             {children}
-            {icon&&defaultIconStyles?cloneElement(icon, {
-               className: `${classes.icon} ${icon.props.className}`
-            }):icon}
+            {icon && defaultIconStyles ? cloneElement(icon, {
+                className: `${classes.icon} ${icon.props.className}`
+            }) : icon}
         </Element>
     );
 };

@@ -3,7 +3,8 @@ import React, {
     cloneElement,
     FC,
     isValidElement,
-    ReactElement, ReactNode,
+    ReactElement,
+    ReactNode,
     useCallback,
     useEffect,
     useMemo,
@@ -24,7 +25,7 @@ type DropDownProps = {
     colorIndex?: IColorIndex;
     label?: ReactNode;
     size?: IElementsSize;
-    onChange?: (index:number) => void;
+    onChange?: (index: number) => void;
     children?: ReactElement<any, "div">[];
     multiselect?: boolean;
 }
@@ -99,7 +100,7 @@ const DropDown: FC<DropDownProps> = (props: DropDownProps) => {
 
 
     const handleActive = (item: any) => {
-        if(onChange)onChange(item)
+        if (onChange) onChange(item)
 
 
         handleOpen()
@@ -116,7 +117,7 @@ const DropDown: FC<DropDownProps> = (props: DropDownProps) => {
                 prevState[item] = item
                 return prevState
             })
-        }else{
+        } else {
             if (item === activeIndex) {
                 setActiveIndex(-1)
                 return
@@ -124,8 +125,6 @@ const DropDown: FC<DropDownProps> = (props: DropDownProps) => {
             setActiveIndex(item)
 
         }
-
-
 
 
     }
@@ -200,18 +199,18 @@ const DropDown: FC<DropDownProps> = (props: DropDownProps) => {
                 {
                     multiselect ?
 
-                        Object.keys(multiselectIndexes).length>0?
-                        Object.keys(multiselectIndexes).map((value, index) => {
+                        Object.keys(multiselectIndexes).length > 0 ?
+                            Object.keys(multiselectIndexes).map((value, index) => {
 
 
-                            return (
-                                <DropDownMultiTag
-                                    index={Number(value)}
-                                    value={children && children[Number(value)].props.children}
-                                    onClick={onTagClick}
-                                />
-                            )
-                        }):label
+                                return (
+                                    <DropDownMultiTag
+                                        index={Number(value)}
+                                        value={children && children[Number(value)].props.children}
+                                        onClick={onTagClick}
+                                    />
+                                )
+                            }) : label
                         : activeIndex >= 0 ? children ? children[activeIndex].props.children : label : label
 
                 }

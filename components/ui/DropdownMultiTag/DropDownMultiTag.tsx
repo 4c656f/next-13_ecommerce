@@ -4,10 +4,10 @@ import classes from './DropDownMultiTag.module.css'
 type DropDownMultiTagProps = {
     index: number;
     value: any;
-    onClick: (index:number)=>void;
+    onClick: (index: number) => void;
 }
 
-const DropDownMultiTag:FC<DropDownMultiTagProps> = (props) => {
+const DropDownMultiTag: FC<DropDownMultiTagProps> = (props) => {
 
     const {
         index,
@@ -19,10 +19,10 @@ const DropDownMultiTag:FC<DropDownMultiTagProps> = (props) => {
     return (
         <button
             className={classes.container}
-            onClick={(e)=> {
-            e.stopPropagation()
-            onClick(index)
-        }}>
+            onClick={(e) => {
+                e.stopPropagation()
+                onClick(index)
+            }}>
             {value}
         </button>
     );

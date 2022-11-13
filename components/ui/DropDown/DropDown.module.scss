@@ -6,15 +6,11 @@
 }
 
 
-
-
-
-
 .toggle {
   all: unset;
   position: relative;
   left: 0%;
-  top:0%;
+  top: 0%;
   color: var(--index_0_text);
   transition: $default_transition;
   border-radius: $border_radius;
@@ -29,16 +25,20 @@
   @include default_h4;
   //@include medium_padding($left: 10px, $right: 30px);
 }
-.small{
+
+.small {
   @include small_padding;
 }
-.medium{
+
+.medium {
   @include medium_padding;
 }
-.large{
+
+.large {
   @include large_padding;
 }
-.icon{
+
+.icon {
 
   @include default_svg_layout;
   @include default_svg();
@@ -56,22 +56,24 @@
     }
   }
 }
+
 @keyframes appearance {
-  0%{
+  0% {
     transform: translate(0, -10px);
     opacity: 0;
   }
-  100%{
+  100% {
     transform: translate(0px);
     opacity: 1;
   }
 }
+
 @keyframes hide {
-  0%{
+  0% {
     transform: translate(0px);
     opacity: 1;
   }
-  100%{
+  100% {
     transform: translate(0, -10px);
     opacity: 0;
   }
@@ -102,7 +104,7 @@
 
   @include styling_scrollbar;
 
-  &.hide{
+  &.hide {
     animation-name: hide;
     animation-duration: 0.2s;
     animation-iteration-count: 1;
@@ -110,12 +112,12 @@
     transform: translate(0, -10px);
   }
 
-  @include small_padding($horizontal:10px)
+  @include small_padding($horizontal: 10px)
 
 
 }
 
-.search_container{
+.search_container {
   position: relative;
   width: 100%;
   padding-left: 13px;
@@ -123,7 +125,7 @@
 }
 
 
-.search_input{
+.search_input {
   all: unset;
   height: 40px;
   width: calc(100% - 25px);
@@ -131,14 +133,15 @@
 
   @include default_h4();
 
-  &::placeholder{
+  &::placeholder {
     color: var(--index_1_text);
 
     @include default_h4();
   }
 
 }
-.search_icon{
+
+.search_icon {
   position: absolute;
   transform: translate(0, -50%);
   top: 50%;

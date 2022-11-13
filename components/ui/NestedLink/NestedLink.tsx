@@ -6,7 +6,7 @@ type NestedLinkCustomProps = {
 }
 type NestedLinkProps = NestedLinkCustomProps
 
-const NestedLink:FC<NestedLinkProps> = (props:NestedLinkProps) => {
+const NestedLink: FC<NestedLinkProps> = (props: NestedLinkProps) => {
 
     const {
         children
@@ -18,14 +18,14 @@ const NestedLink:FC<NestedLinkProps> = (props:NestedLinkProps) => {
             className={classes.container}
         >
             {
-                Children.map(children, (value, index)=>{
+                Children.map(children, (value, index) => {
 
                     return (
                         <div>
                             {value}
                             {
-                                index === children.length-1?
-                                    null:
+                                index === children.length - 1 ?
+                                    null :
                                     <span
                                         className={classes.separator}
                                     >/</span>

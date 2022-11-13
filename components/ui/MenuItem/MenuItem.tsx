@@ -24,7 +24,7 @@ const MenuItem = forwardRef<HTMLDivElement, PropsWithChildren<MenuItemProps>>((p
     } = props
 
     const defaultClasses =
-        [   classes.container,
+        [classes.container,
             active ? classes.active : "",
             disabled ? classes.disabled : "",
             chosen ? classes.chosen : "",

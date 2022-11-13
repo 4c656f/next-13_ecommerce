@@ -1,13 +1,9 @@
 "use client";
 import {QueryCache, QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import { httpBatchLink, loggerLink, TRPCClientError } from "@trpc/client";
-import { useState } from "react";
-import superjson from "superjson";
-import { trpc } from '~/utils/trpcClient';
-import {TRPCError} from "@trpc/server";
-import {getHTTPStatusCodeFromError} from "@trpc/server/http";
+import {httpBatchLink} from "@trpc/client";
+import {useState} from "react";
+import {trpc} from '~/utils/trpcClient';
 import {useUserStore} from "~/store/userStore";
-import {redirect} from "next/navigation";
 
 function getBaseUrl() {
     if (typeof window !== "undefined")
@@ -27,12 +23,12 @@ function getBaseUrl() {
 export function ClientProvider(props: { children: React.ReactNode }) {
 
 
-
     const setIsUser = useUserStore(state => state.setIsUser)
 
     const [queryClient] = useState(() => new QueryClient({
         queryCache: new QueryCache({
             onError: (error) => {
+                
                 console.log('errorMiddleware')
                 setIsUser(false)
                 // console.log(error)

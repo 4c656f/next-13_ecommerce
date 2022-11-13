@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {prisma} from "../../../../utils/prisma";
 import {notFound} from "next/navigation";
 
@@ -7,17 +7,18 @@ type PageProps = {
 }
 
 export const revalidate = 3600;
-async function getCategory(categoryName:string) {
+
+async function getCategory(categoryName: string) {
 
     const res = await prisma.category.findFirst({
-        where:{
+        where: {
             name: categoryName
         },
-        include:{
-            productTypes:true
+        include: {
+            productTypes: true
         }
     })
-    if (!res){
+    if (!res) {
         notFound()
     }
 
@@ -25,8 +26,7 @@ async function getCategory(categoryName:string) {
 }
 
 
-
-export default async function Page(props:PageProps){
+export default async function Page(props: PageProps) {
 
     const {
         params
@@ -41,7 +41,7 @@ export default async function Page(props:PageProps){
                     category.name
                 }
             </h1>
-            {category.productTypes.map(value=>{
+            {category.productTypes.map(value => {
                 return <h2
                     key={value.id}
                 >{value.name}</h2>

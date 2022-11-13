@@ -34,6 +34,18 @@
   font-weight: 300;
 }
 
+.small {
+  padding: 7px 13px 7px 13px;
+}
+
+.medium {
+  padding: 10px 16px 10px 16px;
+}
+
+.large {
+  padding: 14px 17px 14px 17px;
+}
+
 .color_0_index {
   background-color: var(--index_1_color);
 }

@@ -13,11 +13,13 @@
   @include medium_padding($left: 10px);
 
 }
-.main_container{
+
+.main_container {
   width: max-content;
   height: max-content;
   position: relative;
 }
+
 .container:focus::placeholder {
   opacity: 0;
 }
@@ -30,7 +32,15 @@
 
 }
 
-
+.small{
+  @include small_padding;
+}
+.medium{
+  @include medium_padding;
+}
+.large{
+  @include large_padding;
+}
 @each $scheme in $color_schemes {
 
   .#{map-get($scheme, 'class_name')} {
@@ -43,7 +53,8 @@
     }
   }
 }
-.icon{
+
+.icon {
 
   @include default_svg_layout;
   @include default_svg();

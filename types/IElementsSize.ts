@@ -1,1 +1,1 @@
-export type IElementsSize = "small"|"medium"|"large"
+export type IElementsSize = "small" | "medium" | "large"
