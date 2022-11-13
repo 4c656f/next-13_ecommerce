@@ -14,10 +14,15 @@ export const createTrpcContext = async (opts: trpcNext.CreateNextContextOptions)
     const requestCookies = opts.req.cookies;
 
     if (requestCookies?.['refresh_token']) {
-        return {refreshToken: requestCookies['refresh_token']}
+        return {
+            refreshToken: requestCookies['refresh_token'],
+            res: opts.res
+        }
     }
 
-    return {refreshToken: undefined}
+    return {
+        res: opts.res
+    }
 };
 
 export type TrpcContext = inferAsyncReturnType<typeof createTrpcContext>;

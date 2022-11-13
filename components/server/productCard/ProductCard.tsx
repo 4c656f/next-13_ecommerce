@@ -81,7 +81,6 @@ const ProductCard = (props: ProductCardProps) => {
             </NestedLink>
             <Button
                 onClick={increaseCartCount}
-
             ><span>add to cart</span></Button>
         </div>
     );

@@ -2,7 +2,6 @@
 import React, {FC, FormEvent, useState} from 'react';
 import Button from "~/components/ui/Button/Button";
 import {useUserStore} from "~/store/userStore";
-import Link from "next/link";
 import FormInput from "~/components/client/FormInput/FormInput";
 import classes from "./singUp.module.scss";
 import {useRouter} from "next/navigation";
@@ -19,48 +18,36 @@ const SignInPage: FC<SignInPageProps> = (props: SignInPageProps) => {
 
     const setUser = useUserStore(state => state.setIsUser)
 
-    const {
-        refetch,
-        data,
-        isSuccess,
-        isError,
-
-    } = trpc.user.signIn.useQuery({
-    }, {
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-        refetchOnWindowFocus: false,
-        enabled: false
-    })
 
     const router = useRouter()
 
-    const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        refetch()
-        try{
-            const resp = await fetch('/api/auth/signIn', {
-                method: 'POST',
-                body: JSON.stringify({
-                    userName: formValue?.['userName'],
-                    password: formValue?.['password']
-                })
-            }).then(resp =>resp.json())
-            console.log(resp)
+    const {
+        refetch,
+
+
+    } = trpc.user.signIn.useQuery({
+        userName: formValue.userName,
+        password: formValue.password
+    }, {
+        enabled: false,
+        retry: false,
+        onError: err => {
+
+        },
+        onSuccess: data1 =>{
             setUser({
                 isUser: true,
-                userNickname: resp.userName
+                userNickname: data1.userName
             })
             router.replace('/')
-
-        }catch (e){
-            console.log(e)
-
         }
+    })
 
 
 
-
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        refetch()
 
     }
 
@@ -72,7 +59,7 @@ const SignInPage: FC<SignInPageProps> = (props: SignInPageProps) => {
 
             <form
                 className={classes.form}
-                onSubmit={(e)=>handleSubmit(e)}
+                onSubmit={(e) => handleSubmit(e)}
             >
                 <FormInput
                     placeholder={'userName'}
@@ -99,7 +86,7 @@ const SignInPage: FC<SignInPageProps> = (props: SignInPageProps) => {
                 <Button
                     type={'submit'}
                     className={classes.btn}
-                ><h3>sign Ip</h3></Button>
+                ><h3>sign In</h3></Button>
             </form>
         </div>
     );

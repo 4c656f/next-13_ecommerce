@@ -9,7 +9,7 @@ type HeaderCartProps = {}
 
 const HeaderCart: FC<HeaderCartProps> = (props: HeaderCartProps) => {
 
-    const {cartCount, increaseCartCount} = useCartStore()
+    const cartCount = useCartStore(state => state.cartCount)
 
     const {isUser, userNickname, isLoading} = useUserStore()
 
@@ -24,7 +24,7 @@ const HeaderCart: FC<HeaderCartProps> = (props: HeaderCartProps) => {
     return (
         <div>
             <span
-                onClick={increaseCartCount}
+
             >{cartCount}</span>
             {
                 isLoading?

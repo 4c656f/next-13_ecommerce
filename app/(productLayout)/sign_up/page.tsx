@@ -6,6 +6,7 @@ import Link from "next/link";
 import FormInput from "~/components/client/FormInput/FormInput";
 import classes from "./singUp.module.scss";
 import {useRouter} from "next/navigation";
+import {trpc} from "~/utils/trpcClient";
 
 
 type SignInPageProps = {}
@@ -20,22 +21,28 @@ const SignInPage: FC<SignInPageProps> = (props: SignInPageProps) => {
 
 
     const router = useRouter()
-
+    const {
+        refetch,
+    } = trpc.user.signUp.useQuery({
+        userName: formValue.userName,
+        password: formValue.password,
+        email: formValue.email
+    }, {
+        enabled: false,
+        retry: false,
+        onError: err => {
+        },
+        onSuccess: data1 =>{
+            setUser({
+                isUser: true,
+                userNickname: data1.userName
+            })
+            router.replace('/')
+        }
+    })
     const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
-        const resp = await fetch('/api/auth/signUp', {
-            method: 'POST',
-            body: JSON.stringify({
-                userName: formValue?.['userName'],
-                email: formValue?.['email'],
-                password: formValue?.['password']
-            })
-        })
-
-        router.replace('/')
-
-
+        refetch()
     }
 
 

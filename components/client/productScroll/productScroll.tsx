@@ -151,7 +151,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
             <div
                 className={classes.product_container}
             >
-                {!isRefetching ? data?.pages.map((TData, index) => {
+                {!isRefetching ? data?.pages.map((TData) => {
 
                     const {
                         posts
@@ -180,7 +180,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
                     width: '10px',
                     backgroundColor: "red"
                 }}
-            ></div>
+            />
         </div>
     );
 };
