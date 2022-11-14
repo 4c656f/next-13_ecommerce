@@ -33,11 +33,13 @@ export function ClientProvider(props: { children: React.ReactNode }) {
             }
         },
         queryCache: new QueryCache({
-            onError: (error) => {
+
+            onError: (error, query) => {
                 const customError = error as TRPCClientError<any>
 
                 if(customError.data.code === "UNAUTHORIZED"){
                     setIsUser({isUser: false})
+
                 }
 
 

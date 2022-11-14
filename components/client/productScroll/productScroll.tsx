@@ -1,5 +1,5 @@
 'use client';
-import React, {FC, FocusEvent, useEffect, useRef, useState} from 'react';
+import React, {FC, FocusEvent, useCallback, useEffect, useRef, useState} from 'react';
 import {Prisma} from "@prisma/client";
 import classes from "./productScroll.module.css";
 import ProductCard, {ProductCardPlaceholder} from "../../server/productCard/ProductCard";
@@ -9,6 +9,7 @@ import {AtMostOneOf} from "~/types/IAtMostOne";
 import ArrowIcon from '~/materials/icons/arrow-left.svg'
 import useHandleProductScroll from "~/hooks/handleProductScroll/useHandleProductScroll";
 import {appQueryClient} from "~/utils/appQueryClient";
+import {useCartStore} from "~/store/cartStore";
 
 
 type ProductScrollProps = {
@@ -100,34 +101,47 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
         dispatch({type: actions.HandleOrder, payload: {value: type}})
     }
 
+    const {
+        refetch,
+    } = trpc.protected.getUserCart.useQuery(undefined, {
+        enabled: false
+    })
+
+
+    const addToCart = useCartStore(state1 => state1.addToCart)
 
     const cartMutation = trpc.user.addToCart.useMutation({
         onSuccess: async (data)=>{
-            data
+            refetch()
         },
         onError: (error, data)=>{
-            const prev = localStorage.getItem('products')
-            if(!prev){
-                localStorage.setItem('products', JSON.stringify({[data.productId]: 1}))
-                return
+            if(error?.data?.code === 'UNAUTHORIZED'){
+
+                addToCart(data.productId)
+
+
+                // const prev = localStorage.getItem('products')
+                // if(!prev){
+                //     localStorage.setItem('products', JSON.stringify({[data.productId]: 1}))
+                //     return
+                // }
+                // const prevObj = JSON.parse(prev)
+                // if(data.productId in prevObj){
+                //     prevObj[data.productId] += 1
+                //     localStorage.setItem('products', JSON.stringify(prevObj))
+                // }
+                // localStorage.setItem('products', JSON.stringify({[data.productId]: 1, ...prevObj}))
             }
-            const prevObj = JSON.parse(prev)
-            if(data.productId in prevObj){
-                prevObj[data.productId] += 1
-                localStorage.setItem('products', JSON.stringify(prevObj))
-            }
-            localStorage.setItem('products', JSON.stringify({[data.productId]: 1, ...prevObj}))
-        }
+
+        },
     })
-    useEffect(()=>{
-        console.log(cartMutation.data, 'cartMutation----')
-    },[cartMutation.data])
 
 
 
-    const handleCartMutation = (objID: string) => {
+
+    const handleCartMutation = useCallback((objID: string) => {
         cartMutation.mutate({productId: objID})
-    }
+    },[])
 
     return (
         <div
