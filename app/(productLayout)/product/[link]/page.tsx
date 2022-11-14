@@ -6,7 +6,7 @@ import ProductCard from "../../../../components/server/productCard/ProductCard";
 type PageProps = {
     params: { link: string }
 }
-
+export const revalidate = 3600;
 export async function generateStaticParams() {
 
 
@@ -55,7 +55,6 @@ const Page = async (props: PageProps) => {
         <div>
             <ProductCard
                 product={product}
-
             />
         </div>
     );

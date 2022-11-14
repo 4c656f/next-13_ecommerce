@@ -26,8 +26,22 @@ model UserCart{
  id String @id @map("_id") @default(auto()) @db.ObjectId
  userId String @db.ObjectId @unique
  user User @relation(fields: [userId], references: [id])
- productIds String[] @db.ObjectId
- products Product[] @relation(fields: [productIds], references: [id])
+ cartItems CartItem[]
+}
+
+
+model CartItem{
+    id String @id @map("_id") @default(auto()) @db.ObjectId
+
+    amount Int @default(0)
+
+    cartId String? @db.ObjectId
+    cart UserCart? @relation(fields: [cartId], references: [id])
+
+    productId String? @db.ObjectId
+    product Product? @relation(fields: [productId], references: [id])
+
+    @@unique([cartId, productId], name: "cartItemUUID")
 }
 
 
@@ -39,8 +53,7 @@ model Product{
     link String? @unique
     ProductTypeId String? @db.ObjectId
     productType ProductType? @relation(fields: [ProductTypeId], references: [id])
-    userCartIds String[] @db.ObjectId
-    userCarts UserCart[] @relation(fields: [userCartIds], references: [id])
+    cartItems CartItem[]
 }
 
 

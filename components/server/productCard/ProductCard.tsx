@@ -20,6 +20,7 @@ type ProductCardProps = {
             }
         }
     }>;
+    handleCartMutation?: (objID: string)=>void
 
 }
 
@@ -27,12 +28,14 @@ const ProductCard = (props: ProductCardProps) => {
 
     const {
         product: {
+            id: productId,
             name,
             link,
             price,
             productType,
             image
         },
+        handleCartMutation
     } = props
     const increaseCartCount = useCartStore(state => state.increaseCartCount)
 
@@ -80,7 +83,7 @@ const ProductCard = (props: ProductCardProps) => {
 
             </NestedLink>
             <Button
-                onClick={increaseCartCount}
+                onClick={()=>handleCartMutation&&handleCartMutation(productId)}
             ><span>add to cart</span></Button>
         </div>
     );

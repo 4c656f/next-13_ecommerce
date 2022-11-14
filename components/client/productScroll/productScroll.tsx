@@ -8,6 +8,7 @@ import Button from "~/components/ui/Button/Button";
 import {AtMostOneOf} from "~/types/IAtMostOne";
 import ArrowIcon from '~/materials/icons/arrow-left.svg'
 import useHandleProductScroll from "~/hooks/handleProductScroll/useHandleProductScroll";
+import {appQueryClient} from "~/utils/appQueryClient";
 
 
 type ProductScrollProps = {
@@ -68,9 +69,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
     })
 
-    useEffect(() => {
-        console.log(orderBy)
-    }, [orderBy])
+
     const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
 
         setRange({
@@ -78,17 +77,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
             lt: inputToValue ? Number(inputToValue) : undefined
         })
     }
-    // useEffect(() => {
-    //     console.log('isFetchingNextPage', isFetchingNextPage,
-    //         'isLoading', isLoading,
-    //         'isInitialLoading',isInitialLoading,
-    //         'isRefetching',isRefetching,
-    //         'isFetching',isFetching,
-    //     )
-    // }, [isFetchingNextPage, isLoading, isInitialLoading,isRefetching,isFetching])
 
-
-    //OBSERVER EFFECT
     useEffect(() => {
         if (observerRef.current) observerRef.current.disconnect();
         if (isFetching || !hasNextPage) return;
@@ -110,10 +99,35 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
     const handleOrderClick = (type: "price" | "name") => {
         dispatch({type: actions.HandleOrder, payload: {value: type}})
     }
-    useEffect(() => {
-        console.log('reducerChanged')
-        console.log(state.orderBy)
-    }, [state])
+
+
+    const cartMutation = trpc.user.addToCart.useMutation({
+        onSuccess: async (data)=>{
+            data
+        },
+        onError: (error, data)=>{
+            const prev = localStorage.getItem('products')
+            if(!prev){
+                localStorage.setItem('products', JSON.stringify({[data.productId]: 1}))
+                return
+            }
+            const prevObj = JSON.parse(prev)
+            if(data.productId in prevObj){
+                prevObj[data.productId] += 1
+                localStorage.setItem('products', JSON.stringify(prevObj))
+            }
+            localStorage.setItem('products', JSON.stringify({[data.productId]: 1, ...prevObj}))
+        }
+    })
+    useEffect(()=>{
+        console.log(cartMutation.data, 'cartMutation----')
+    },[cartMutation.data])
+
+
+
+    const handleCartMutation = (objID: string) => {
+        cartMutation.mutate({productId: objID})
+    }
 
     return (
         <div
@@ -162,6 +176,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
                             <ProductCard
                                 key={value.id}
                                 product={value}
+                                handleCartMutation={handleCartMutation}
                             />
                         )
                     })

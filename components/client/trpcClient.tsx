@@ -27,6 +27,11 @@ export function ClientProvider(props: { children: React.ReactNode }) {
     const setIsUser = useUserStore(state => state.setIsUser)
 
     const [queryClient] = useState(() => new QueryClient({
+        defaultOptions: {
+            mutations: {
+                cacheTime: 1000 * 60 * 60 * 24
+            }
+        },
         queryCache: new QueryCache({
             onError: (error) => {
                 const customError = error as TRPCClientError<any>

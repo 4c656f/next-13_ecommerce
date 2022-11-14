@@ -4,6 +4,7 @@ import {useCartStore} from "~/store/cartStore";
 import {useUserStore} from "~/store/userStore";
 import Button from "~/components/ui/Button/Button";
 import Link from "next/link";
+import {trpc} from "~/utils/trpcClient";
 
 type HeaderCartProps = {}
 
@@ -20,12 +21,17 @@ const HeaderCart: FC<HeaderCartProps> = (props: HeaderCartProps) => {
         console.log('-----barState', userNickname, isUser)
     },[isUser, userNickname])
 
+    const cartMutation = trpc.user.addToCart.useMutation({})
+
+    useEffect(()=>{
+        console.log(cartMutation.data?.cart?.cartItems.length, '----cartSubscr')
+    },[cartMutation.data])
 
     return (
         <div>
             <span
 
-            >{cartCount}</span>
+            >{cartMutation?.data?.cart?.cartItems.length}</span>
             {
                 isLoading?
                     <span>Loading</span>:

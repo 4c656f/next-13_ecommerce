@@ -3,12 +3,10 @@ import {NextFetchEvent, NextResponse} from "next/server";
 import {serializeCookie, signToken, validateToken} from "~/utils/tokenMethods";
 
 
-
-
-const protectedForAuthUsers = [
-    "/sign_in",
-    "/sign_up",
-]
+const protectedForAuthUsers = {
+    "/sign_in": true,
+    "/sign_up": true,
+}
 
 
 export default async function middleware(request: NextRequest, fetch: NextFetchEvent) {
@@ -18,10 +16,10 @@ export default async function middleware(request: NextRequest, fetch: NextFetchE
 
     const response = NextResponse
 
-    const isRequestForAuthProtected = protectedForAuthUsers.some(value => request.nextUrl.pathname.startsWith(value))
+    const isRequestForAuthProtected = request.nextUrl.pathname in protectedForAuthUsers
 
-    console.log(isRequestForAuthProtected)
-    if(!isRequestForAuthProtected){
+
+    if (!isRequestForAuthProtected) {
         if (validateRefresh) {
             const {refresh} = await signToken({userName: validateRefresh?.userName})
             const refreshToken = serializeCookie('refresh_token', refresh, 60 * 60 * 24 * 30)
@@ -38,7 +36,7 @@ export default async function middleware(request: NextRequest, fetch: NextFetchE
 
         return response.redirect(url)
     }
-    if(validateRefresh){
+    if (validateRefresh) {
         const url = request.nextUrl.clone()
 
         url.pathname = '/'

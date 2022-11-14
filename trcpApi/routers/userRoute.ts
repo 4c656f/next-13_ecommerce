@@ -2,10 +2,10 @@ import {z} from "zod";
 import {publicProcedure, router} from "../trpcServer";
 import {TRPCError} from "@trpc/server";
 import {prisma} from "~/utils/prisma";
-import {serializeCookie, signToken} from "~/utils/tokenMethods";
+import {serializeCookie, signToken, validateToken} from "~/utils/tokenMethods";
 import {headers} from "next/headers";
 import slugify from "slugify";
-
+import {CartItem} from '@prisma/client'
 export const userRouter = router({
     signIn: publicProcedure
         .input(z.object({
@@ -102,4 +102,89 @@ export const userRouter = router({
 
             return {userName: userName}
         }),
+    addToCart: publicProcedure.input(z.object({
+        productId: z.string()
+    })).mutation(async ({input, ctx})=>{
+
+        const {
+            productId
+        } = input
+
+        const {
+            refreshToken
+        } = ctx
+
+        const payload = await validateToken(refreshToken)
+
+        if (!refreshToken || !payload) {
+            throw new TRPCError({
+                code: 'UNAUTHORIZED',
+                message: 'un'
+            })
+        }
+        const cartId = await prisma.userCart.findFirst({
+            where:{
+                user:{
+                    username: payload.userName as string
+                }
+            },
+            select:{
+                id: true
+            }
+        })
+
+
+        console.log(payload.userName, cartId, 'payload-----')
+
+        const addProduct = await prisma.user.update({
+            where:{
+                username: payload.userName as string
+            },
+            data:{
+                cart:{
+                    upsert:{
+                        update: {
+                            cartItems:{
+                                upsert:{
+                                    where:{
+                                        cartItemUUID: {
+                                            cartId: cartId?cartId.id:'false',
+                                            productId: productId
+                                        }
+                                    },
+                                    update: {
+                                        amount:{
+                                            increment: 1
+                                        }
+                                    },
+                                    create: {
+                                        productId: productId,
+                                    }
+                                }
+                            }
+                        },
+                        create: {
+                            cartItems: {
+                                create:{
+
+                                }
+                            },
+                        }
+                    }
+                }
+            },
+            select: {
+                cart: {
+                    select: {
+                        cartItems: true
+                    }
+                }
+            }
+        })
+
+
+        return addProduct
+
+
+    })
 });
