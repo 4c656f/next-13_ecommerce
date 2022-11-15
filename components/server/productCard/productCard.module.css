@@ -52,3 +52,12 @@
 .link {
   color: var(--index_0_text);
 }
+
+.name {
+  flex-grow: 1;
+}
+
+.add_btn {
+  width: 100%;
+  justify-content: center;
+}

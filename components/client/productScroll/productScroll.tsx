@@ -10,6 +10,7 @@ import ArrowIcon from '~/materials/icons/arrow-left.svg'
 import useHandleProductScroll from "~/hooks/handleProductScroll/useHandleProductScroll";
 import {appQueryClient} from "~/utils/appQueryClient";
 import {useCartStore} from "~/store/cartStore";
+import {useUserStore} from "~/store/userStore";
 
 
 type ProductScrollProps = {
@@ -31,23 +32,31 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
         initialProducts
     } = props
 
+
+
     const elemRef = useRef<any>(null)
+
     const observerRef = useRef<any>(null)
 
 
-    const [orderBy, setOrderBy] = useState<AtMostOneOf<{
-        price: boolean,
-        name: boolean,
-    }>>({price: true})
 
+
+
+    //PRICE FILTER STATE
     const [inputFromValue, setInputFromValue] = useState('')
     const [inputToValue, setInputToValue] = useState('')
 
 
+    //PRICE FILTER STATE
     const [range, setRange] = useState<undefined | { lt?: number, gt?: number }>()
 
+
+
+    //PRODUCT SCROLL REDUCER
     const {state, actions, dispatch} = useHandleProductScroll()
 
+
+    //PRODUCTS QUERY
     const {
         data,
         fetchNextPage,
@@ -71,6 +80,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
     })
 
 
+    //FILTER INPUTS BLUR
     const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
 
         setRange({
@@ -79,6 +89,7 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
         })
     }
 
+    //OBSERVER EFFECT
     useEffect(() => {
         if (observerRef.current) observerRef.current.disconnect();
         if (isFetching || !hasNextPage) return;
@@ -97,41 +108,33 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
     }, [isFetching, hasNextPage])
 
 
+
+
     const handleOrderClick = (type: "price" | "name") => {
         dispatch({type: actions.HandleOrder, payload: {value: type}})
     }
 
+
+    //CART QUERY
     const {
         refetch,
-    } = trpc.protected.getUserCart.useQuery(undefined, {
-        enabled: false
+    } = trpc.user.getUserCart.useQuery(undefined, {
+        enabled: false,
+        cacheTime: 0
     })
 
 
+    //CART && USERSTORE
     const addToCart = useCartStore(state1 => state1.addToCart)
+    const isUser = useUserStore(state1 => state1.isUser)
 
+
+    //CART MUTATION
     const cartMutation = trpc.user.addToCart.useMutation({
         onSuccess: async (data)=>{
             refetch()
         },
         onError: (error, data)=>{
-            if(error?.data?.code === 'UNAUTHORIZED'){
-
-                addToCart(data.productId)
-
-
-                // const prev = localStorage.getItem('products')
-                // if(!prev){
-                //     localStorage.setItem('products', JSON.stringify({[data.productId]: 1}))
-                //     return
-                // }
-                // const prevObj = JSON.parse(prev)
-                // if(data.productId in prevObj){
-                //     prevObj[data.productId] += 1
-                //     localStorage.setItem('products', JSON.stringify(prevObj))
-                // }
-                // localStorage.setItem('products', JSON.stringify({[data.productId]: 1, ...prevObj}))
-            }
 
         },
     })
@@ -139,9 +142,15 @@ const ProductScroll: FC<ProductScrollProps> = (props: ProductScrollProps) => {
 
 
 
+
     const handleCartMutation = useCallback((objID: string) => {
-        cartMutation.mutate({productId: objID})
-    },[])
+        if(isUser){
+            cartMutation.mutate({productId: objID})
+        }else{
+            addToCart(objID)
+        }
+
+    },[isUser])
 
     return (
         <div

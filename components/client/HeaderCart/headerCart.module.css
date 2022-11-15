@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-gap: 20px;
+}
+
+.loading {
+  animation-name: backgroundPulse;
+  animation-duration: 1s;
+}

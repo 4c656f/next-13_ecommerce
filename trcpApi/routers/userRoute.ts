@@ -2,10 +2,10 @@ import {z} from "zod";
 import {publicProcedure, router} from "../trpcServer";
 import {TRPCError} from "@trpc/server";
 import {prisma} from "~/utils/prisma";
-import {serializeCookie, signToken, validateToken} from "~/utils/tokenMethods";
-import {headers} from "next/headers";
+import {serializeCookie, signToken} from "~/utils/tokenMethods";
 import slugify from "slugify";
-import {CartItem} from '@prisma/client'
+import {protectedProcedure} from "~/trcpApi/trpcMiddlewares";
+
 export const userRouter = router({
     signIn: publicProcedure
         .input(z.object({
@@ -16,7 +16,7 @@ export const userRouter = router({
             const {
                 userName,
                 password
-            }= input
+            } = input
 
             const isUniq = await prisma.user.findUnique({
                 where: {
@@ -25,13 +25,13 @@ export const userRouter = router({
             })
 
 
-            if(!isUniq){
+            if (!isUniq) {
                 throw new TRPCError({
                     code: 'BAD_REQUEST',
                     message: 'User not found',
                 })
             }
-            if(isUniq.password !== password){
+            if (isUniq.password !== password) {
                 throw new TRPCError({
                     code: 'BAD_REQUEST',
                     message: 'Invalid password',
@@ -60,13 +60,12 @@ export const userRouter = router({
                 userName,
                 password,
                 email
-            }= input
-
+            } = input
 
 
             const isUniq = await prisma.user.findFirst({
                 where: {
-                    OR:[
+                    OR: [
                         {username: userName},
                         {email: email}
                     ]
@@ -74,14 +73,13 @@ export const userRouter = router({
             })
 
 
-            if(isUniq){
+            if (isUniq) {
                 throw new TRPCError({
                     code: 'BAD_REQUEST',
                     message: 'User not uniq',
                 })
             }
             const link = slugify(userName)
-
 
 
             const {refresh} = await signToken({
@@ -102,58 +100,44 @@ export const userRouter = router({
 
             return {userName: userName}
         }),
-    addToCart: publicProcedure.input(z.object({
+    addToCart: protectedProcedure.input(z.object({
         productId: z.string()
-    })).mutation(async ({input, ctx})=>{
+    })).mutation(async ({input, ctx}) => {
 
         const {
             productId
         } = input
 
         const {
-            refreshToken
+            refreshToken,
+            userName,
+            userId
         } = ctx
 
-        const payload = await validateToken(refreshToken)
-
-        if (!refreshToken || !payload) {
-            throw new TRPCError({
-                code: 'UNAUTHORIZED',
-                message: 'un'
-            })
-        }
-        const cartId = await prisma.userCart.findFirst({
-            where:{
-                user:{
-                    username: payload.userName as string
-                }
-            },
-            select:{
-                id: true
+        const cartId = await prisma.userCart.findUniqueOrThrow({
+            where: {
+                userId: userId
             }
         })
 
-
-        console.log(payload.userName, cartId, 'payload-----')
-
         const addProduct = await prisma.user.update({
-            where:{
-                username: payload.userName as string
+            where: {
+                username: userName
             },
-            data:{
-                cart:{
-                    upsert:{
+            data: {
+                cart: {
+                    upsert: {
                         update: {
-                            cartItems:{
-                                upsert:{
-                                    where:{
+                            cartItems: {
+                                upsert: {
+                                    where: {
                                         cartItemUUID: {
-                                            cartId: cartId?cartId.id:'false',
+                                            cartId: cartId.id,
                                             productId: productId
                                         }
                                     },
                                     update: {
-                                        amount:{
+                                        amount: {
                                             increment: 1
                                         }
                                     },
@@ -165,9 +149,10 @@ export const userRouter = router({
                         },
                         create: {
                             cartItems: {
-                                create:{
+                                create: {
+                                    productId: productId,
+                                },
 
-                                }
                             },
                         }
                     }
@@ -186,5 +171,84 @@ export const userRouter = router({
         return addProduct
 
 
+    }),
+    decrementCartItem: protectedProcedure
+        .input(z.object({
+            productId: z.string()
+        })).mutation(async ({input, ctx}) => {
+            const {
+                productId
+            } = input
+
+            const {
+                userName,
+                userId
+            } = ctx
+
+
+
+
+            const getCart = await prisma.userCart.findUniqueOrThrow({
+                where:{
+                    userId: userId
+                }
+            })
+
+            const removedProduct = await prisma.cartItem.update({
+                where:{
+                    cartItemUUID:{
+                        productId: productId,
+                        cartId: getCart.id
+                    }
+                },
+                data:{
+                    amount: {
+                        decrement: 1
+                    }
+
+                }
+            })
+            return removedProduct
+
+
+
+        }),
+
+
+    getSession: protectedProcedure
+        .input(
+            z.string().optional()
+        )
+        .query(async ({input, ctx}) => {
+
+
+            return {userName: ctx.userName}
+
+        }),
+    getUserCart: protectedProcedure
+        .input(z.undefined())
+        .query(async ({input, ctx})=>{
+
+            const {userId} = ctx
+
+            const cart = await prisma.userCart.findUniqueOrThrow({
+                where:{
+                    userId: userId
+                },
+                select:{
+
+                    cartItems:{
+                        where:{
+                            amount:{
+                                gt:0
+                            }
+                        },
+                        include:{
+                            product: true
+                        }
+                    }
+                }
+            })
+            return {cart: cart}
     })
 });

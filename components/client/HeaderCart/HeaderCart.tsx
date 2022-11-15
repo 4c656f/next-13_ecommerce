@@ -5,66 +5,90 @@ import {useUserStore} from "~/store/userStore";
 import Button from "~/components/ui/Button/Button";
 import Link from "next/link";
 import {trpc} from "~/utils/trpcClient";
-import {data} from "browserslist";
+import classes from './headerCart.module.css'
 
 
 type HeaderCartProps = {}
 
 const HeaderCart: FC<HeaderCartProps> = (props: HeaderCartProps) => {
 
-    const cartLength = useCartStore(state => state.length)
+    const {cartLength, hydrateStore} = useCartStore(state => ({cartLength: state.length, hydrateStore: state.hydrateStore}))
 
     const {isUser, userNickname, isLoading} = useUserStore()
 
 
     const {} = props
 
-    useEffect(()=>{
-        console.log('-----barState', userNickname, isUser)
-    },[isUser, userNickname])
+
 
 
     const {
         isFetching,
         data,
-        isError
-    } = trpc.protected.getUserCart.useQuery(undefined,{
-        refetchOnMount: true,
+        isError,
+        refetch
+    } = trpc.user.getUserCart.useQuery(undefined,{
+        enabled: false,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
         retry: false,
+        cacheTime: 0,
+        onSuccess: (data)=>{
+          console.log('cartQueryrefetch--------', data)
+        },
         onError: (err)=>{
 
         },
     })
-    //
-    // useEffect(()=>{
-    //     console.log(cartQuery.data, '----cartQuerystate')
-    //
-    // },[cartQuery.data])
+
+
+    useEffect(()=>{
+        if(isLoading)return
+        if(!isUser){
+            hydrateStore()
+            return;
+        }
+        refetch()
+    },[isUser, isLoading])
+
 
 
     return (
-        <div>
-            <span
+        <div
+            className={classes.container}
+        >
+            <Button
 
+                className={isLoading?classes.loading:undefined}
+                href={'/cart'}
+                as={Link}
             >
-                {
+                <span>{
                 isUser?
                     data?.cart?.cartItems.length:
                     cartLength
 
-                    }
-            </span>
+                }</span>
+            </Button>
             {
                 isLoading?
                     <span>Loading</span>:
                     isUser?
                         <span>{userNickname}</span>:
-                        <Button
-                            href={'/sign_in'}
+                        <>
+                            <Button
+                                href={'/sign_in'}
+                                as={Link}
+                            >
+                                <span>signIn</span>
+                            </Button>
+                            <Button
+                            href={'/sign_up'}
                             as={Link}
-                        >
-                            <span>signIn</span>
-                        </Button>
+                            >
+                            <span>signUp</span>
+                            </Button>
+                        </>
             }
         </div>
     );

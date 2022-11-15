@@ -91,7 +91,7 @@ const SignInPage: FC<SignInPageProps> = (props: SignInPageProps) => {
                 <Button
                     type={'submit'}
                     className={classes.btn}
-                ><h3>sign Un</h3></Button>
+                ><h3>sign Up</h3></Button>
             </form>
         </div>
     );

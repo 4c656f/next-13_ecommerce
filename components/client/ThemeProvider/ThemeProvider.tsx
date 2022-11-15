@@ -29,7 +29,7 @@ const ThemeProvider: FC<ThemeProviderProps> = (props) => {
     const setIsUser = useUserStore(state => state.setIsUser)
 
 
-    const {data, isLoading, isFetching} = trpc.protected.getSession.useQuery(undefined,{
+    const {data, isLoading, isFetching} = trpc.user.getSession.useQuery(undefined,{
         retry: false,
         refetchOnWindowFocus: true
     })

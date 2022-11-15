@@ -35,14 +35,16 @@
 }
 
 .elements_container {
-  width: max-content;
+  width: auto;
   max-height: 60vh;
   flex-grow: 1;
   max-width: 80vw;
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  grid-gap: 10px;
+  justify-content: space-between;
+  grid-row-gap: 30px;
+  overflow-x: scroll;
 }
 
 .section_element {
@@ -60,4 +62,14 @@
   width: 100%;
   flex-direction: column;
   grid-gap: 6px;
+}
+
+@media (max-width: 500px) {
+  .container {
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .section_element {
+    width: 100%;
+  }
 }

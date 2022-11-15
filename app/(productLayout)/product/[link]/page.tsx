@@ -7,6 +7,7 @@ type PageProps = {
     params: { link: string }
 }
 export const revalidate = 3600;
+
 export async function generateStaticParams() {
 
 
@@ -20,7 +21,7 @@ export async function generateStaticParams() {
 
 async function getProduct(productLink: string) {
 
-    const res = await prisma.product.findFirst({
+    const res = await prisma.product.findUnique({
         where: {
             link: productLink
         },

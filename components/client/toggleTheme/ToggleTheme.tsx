@@ -13,7 +13,7 @@ const ToggleTheme: FC<ToggleThemeProps> = (props: ToggleThemeProps) => {
 
     return <Button
         onClick={toggleTheme}
-    ><h3>Toggle</h3></Button>
+    ><span>Toggle</span></Button>
 };
 
 export default ToggleTheme;

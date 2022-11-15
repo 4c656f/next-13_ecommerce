@@ -45,7 +45,16 @@ export function ClientProvider(props: { children: React.ReactNode }) {
 
             }
 
-        })
+        }),
+        logger: {
+            log: (log)=>{
+                console.log(log)
+            },
+            warn: (warn)=>{
+                console.log(warn)
+            },
+            error: (e)=>{}
+        }
     }));
     const [trpcClient] = useState(() =>
         trpc.createClient({

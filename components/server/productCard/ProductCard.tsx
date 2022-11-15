@@ -37,7 +37,7 @@ const ProductCard = (props: ProductCardProps) => {
         },
         handleCartMutation
     } = props
-    const increaseCartCount = useCartStore(state => state.increaseCartCount)
+
 
     return (
         <div
@@ -67,7 +67,9 @@ const ProductCard = (props: ProductCardProps) => {
                 )
 
             })}
-            <h1>{name}</h1>
+            <h1
+                className={classes.name}
+            >{name}</h1>
             <h1>{price}</h1>
             <NestedLink>
                 <Link
@@ -83,6 +85,8 @@ const ProductCard = (props: ProductCardProps) => {
 
             </NestedLink>
             <Button
+                className={classes.add_btn}
+                size={'medium'}
                 onClick={()=>handleCartMutation&&handleCartMutation(productId)}
             ><span>add to cart</span></Button>
         </div>
