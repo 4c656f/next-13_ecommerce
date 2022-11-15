@@ -10,7 +10,7 @@ export const revalidate = 3600;
 
 
 
-export default async function getProduct(productLink: string) {
+async function getProduct(productLink: string) {
 
     console.log('PRODUCT REVALIDATION-----')
 
@@ -36,7 +36,7 @@ export default async function getProduct(productLink: string) {
     return res;
 }
 
-const Page = async (props: PageProps) => {
+export default async function Page (props: PageProps) {
 
     const {
         params
