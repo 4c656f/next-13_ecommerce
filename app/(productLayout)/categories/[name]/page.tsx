@@ -10,6 +10,8 @@ export const revalidate = 3600;
 
 async function getCategory(categoryName: string) {
 
+    console.log('CATEGORY REVALIDATION-----')
+
     const res = await prisma.category.findFirst({
         where: {
             name: categoryName

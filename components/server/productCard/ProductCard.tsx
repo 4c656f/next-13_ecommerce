@@ -51,7 +51,6 @@ const ProductCard = (props: ProductCardProps) => {
                         key={value.id}
                         className={classes.image_container}
                         href={`/product/${link}`}
-                        prefetch={false}
                     >
                         <CustomImage
 
@@ -75,12 +74,12 @@ const ProductCard = (props: ProductCardProps) => {
                 <Link
                     href={`/categories/${productType?.category?.name}`}
                     className={classes.link}
-                    prefetch={false}
+
                 >{productType?.category?.name}</Link>
                 <Link
                     href={`/products/${productType?.name}`}
                     className={classes.link}
-                    prefetch={false}
+
                 >{productType?.name}</Link>
 
             </NestedLink>

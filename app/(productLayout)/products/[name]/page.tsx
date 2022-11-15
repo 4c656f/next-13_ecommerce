@@ -6,6 +6,9 @@ export const revalidate = 3600;
 
 async function getCategory(productTypeName: string) {
 
+    console.log('TYPY OF PRODUCT REVALIDATION-----')
+
+
     const res = await prisma.productType.findFirst({
         where: {
             name: productTypeName

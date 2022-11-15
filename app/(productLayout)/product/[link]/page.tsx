@@ -8,18 +8,11 @@ type PageProps = {
 }
 export const revalidate = 3600;
 
-export async function generateStaticParams() {
 
 
-    console.log('------GENERATE PRODUCT ROUTES')
-    const products = await prisma.product.findMany()
+export default async function getProduct(productLink: string) {
 
-    return products.map((value) => ({
-        link: value.link,
-    }));
-}
-
-async function getProduct(productLink: string) {
+    console.log('PRODUCT REVALIDATION-----')
 
     const res = await prisma.product.findUnique({
         where: {
@@ -61,4 +54,13 @@ const Page = async (props: PageProps) => {
     );
 };
 
-export default Page;
+export async function generateStaticParams() {
+
+
+    console.log('------GENERATE PRODUCT ROUTES')
+    const products = await prisma.product.findMany()
+
+    return products.map((value) => ({
+        link: value.link,
+    }));
+}
