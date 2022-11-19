@@ -1,4 +1,4 @@
-@import '../../../scssMaterials/variables';
+@import '../../../scssMaterials/_variables';
 
 .header_container {
   width: 100%;
@@ -8,4 +8,16 @@
 .logo_href {
   all: unset;
   cursor: pointer;
+}
+.right_header_section{
+  display: flex;
+}
+.right_header_show{
+  display: none;
+}
+@media (max-width: 450px) {
+  .right_header_section{
+
+  }
+
 }

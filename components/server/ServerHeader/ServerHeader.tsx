@@ -85,14 +85,21 @@ export default async function ServerHeader(props: ServerHeaderProps) {
                         />
                     </HeaderItem>
                     ]}
-                rightSection={[
-                    <ToggleTheme
-                        key={'someRandom'}
-                    />,
-                    <HeaderCart
-                        key={'someRandom2'}
-                    />
-                ]}
+                rightSection={
+
+                    <div
+                        className={classes.right_header_section}
+
+                    >
+
+                        <ToggleTheme
+                            key={'someRandom'}
+                        />
+                        <HeaderCart
+                            key={'someRandom2'}
+                        />
+                    </div>
+                    }
             />
         </div>
     );

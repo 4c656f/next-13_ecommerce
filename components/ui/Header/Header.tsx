@@ -8,7 +8,7 @@ type props = {
 type HeaderProps = {
     logoSection?: ReactElement<any, any>,
     mainSection?: ReactElement<any, any>[],
-    rightSection?: ReactElement<any, any>[],
+    rightSection?: ReactElement<any, any>[] | ReactElement<any, any>,
 }
 
 const Header: FC<HeaderProps> = (props: HeaderProps) => {

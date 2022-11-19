@@ -116,9 +116,9 @@
   background: none;
 }
 .menu::-webkit-scrollbar-thumb {
-  border: 2.5px solid rgba(0, 0, 0, 0);
+  border: 1.5px solid rgba(0, 0, 0, 0);
   background-clip: padding-box;
-  background-color: var(--index_2_color);
+  background: var(--index_1_color);
   border-radius: 9999px;
 }
 .menu::-webkit-scrollbar-corner {

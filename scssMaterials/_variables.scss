@@ -166,7 +166,8 @@ $default_transition: 0.3s;
 }
 
 
-@mixin styling_scrollbar() {
+
+@mixin styling_scrollbar($color_index:1) {
   /* width */
   &::-webkit-scrollbar {
     width: 8px;
@@ -183,13 +184,14 @@ $default_transition: 0.3s;
   /* Handle */
   &::-webkit-scrollbar-thumb {
 
-    border: 2.5px solid rgba(0, 0, 0, 0);
+    border: 1.5px solid rgba(0, 0, 0, 0);
     background-clip: padding-box;
 
-    background-color: var(--index_2_color);
+    background: var(--index_#{$color_index}_color);
 
 
     border-radius: 9999px;
+
 
 
   }

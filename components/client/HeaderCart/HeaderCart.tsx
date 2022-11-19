@@ -1,5 +1,5 @@
 'use client'
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {useCartStore} from "~/store/cartStore";
 import {useUserStore} from "~/store/userStore";
 import Button from "~/components/ui/Button/Button";
@@ -16,6 +16,7 @@ const HeaderCart: FC<HeaderCartProps> = (props: HeaderCartProps) => {
 
     const {isUser, userNickname, isLoading} = useUserStore()
 
+    const [isMenuShown, setIsMenuShown] = useState(false)
 
     const {} = props
 
@@ -54,43 +55,53 @@ const HeaderCart: FC<HeaderCartProps> = (props: HeaderCartProps) => {
 
 
     return (
-        <div
-            className={classes.container}
-        >
-            <Button
-
-                className={isLoading?classes.loading:undefined}
-                href={'/cart'}
-                as={Link}
+        <>
+            <div
+                className={`${classes.container} ${isMenuShown&&classes.active_container}`}
             >
-                <span>{
-                isUser?
-                    data?.cart?.cartItems.length:
-                    cartLength
+                <Button
 
-                }</span>
-            </Button>
-            {
-                isLoading?
-                    <span>Loading</span>:
+                    className={isLoading?classes.loading:undefined}
+                    href={'/cart'}
+                    as={Link}
+                >
+                    <span>{
                     isUser?
-                        <span>{userNickname}</span>:
-                        <>
-                            <Button
-                                href={'/sign_in'}
+                        data?.cart?.cartItems.length:
+                        cartLength
+
+                    }</span>
+                </Button>
+                {
+                    isLoading?
+                        <span>Loading</span>:
+                        isUser?
+                            <span>{userNickname}</span>:
+                            <>
+                                <Button
+                                    href={'/sign_in'}
+                                    as={Link}
+                                >
+                                    <span>signIn</span>
+                                </Button>
+                                <Button
+                                href={'/sign_up'}
                                 as={Link}
-                            >
-                                <span>signIn</span>
-                            </Button>
-                            <Button
-                            href={'/sign_up'}
-                            as={Link}
-                            >
-                            <span>signUp</span>
-                            </Button>
-                        </>
-            }
-        </div>
+                                >
+                                <span>signUp</span>
+                                </Button>
+                            </>
+                }
+
+            </div>
+
+            <Button
+                className={classes.right_header_show}
+                onClick={()=>setIsMenuShown(prevState => !prevState)}
+            >
+                <span>{isMenuShown?'hide menu':'show menu'}</span>
+            </Button>
+        </>
     );
 };
 

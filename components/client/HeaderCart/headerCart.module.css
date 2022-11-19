@@ -5,7 +5,27 @@
   grid-gap: 20px;
 }
 
+.right_header_show {
+  display: none;
+}
+
+.active_container {
+  display: block !important;
+}
+
 .loading {
   animation-name: backgroundPulse;
   animation-duration: 1s;
+}
+
+@media (max-width: 450px) {
+  .container {
+    display: none;
+    position: absolute;
+    background-color: var(--index_1_color);
+    top: calc(0% + 60px);
+  }
+  .right_header_show {
+    display: block;
+  }
 }

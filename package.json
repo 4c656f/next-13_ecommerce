@@ -7,7 +7,7 @@
     "build": "next build" ,
     "start": "next start" ,
     "lint": "next lint" ,
-    "sass": "sass --watch --no-source-map app/:app/ components/:components/"
+    "sass": "sass --watch --no-source-map app/:app/ components/:components/ scssMaterials/:scssMaterials"
   } ,
   "dependencies": {
     "@prisma/client": "^4.5.0" ,

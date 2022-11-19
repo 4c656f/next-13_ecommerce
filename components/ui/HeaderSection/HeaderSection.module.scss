@@ -1,4 +1,4 @@
-@import '../../../scssMaterials/variables';
+@import '../../../scssMaterials/_variables';
 
 @keyframes header_section_appearance {
   0% {
@@ -27,7 +27,9 @@
   animation-name: header_section_appearance;
   animation-duration: 0.2s;
 
-  @include small_padding($vertical: 14px)
+
+
+  @include small_padding($vertical: 14px);
 
 }
 
@@ -58,6 +60,7 @@
   grid-row-gap: 30px;
   overflow-x: scroll;
 
+  @include styling_scrollbar($color_index: 1);
   //@include small_padding()
   //flex-direction: column;
   //align-content: start;
